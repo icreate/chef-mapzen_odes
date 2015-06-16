@@ -18,10 +18,6 @@ default[:mapzen_odes][:process][:shapes]     = false
 default[:mapzen_odes][:process][:extracts]   = false
 default[:mapzen_odes][:process][:coastlines] = false
 
-# when the planet is updated in full or in part, create a file off of which
-#   subsequent processing will be triggered (conversion of the planet to .o5m)
-default[:mapzen_odes][:data][:trigger_file] = '/etc/.odes_data_trigger'
-
 # setup
 default[:mapzen_odes][:setup][:basedir]     = '/mnt/metro'
 default[:mapzen_odes][:setup][:scriptsdir]  = '/opt/odes-scripts'
