@@ -66,10 +66,7 @@ template "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_planet.sh" do
 end
 
 cron 'update planet' do
-  command <<-EOH
-    #{node[:mapzen_odes][:setup][:scriptsdir]}/update_planet.sh \
-      >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_planet.log 2>&1
-  EOH
+  command "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_planet.sh >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_planet.log 2>&1"
   user    node[:mapzen_odes][:user][:id]
   home    node[:mapzen_odes][:setup][:basedir]
   hour    '5'
