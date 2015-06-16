@@ -68,7 +68,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
-      'odes' => {
+      'mapzen_odes' => {
         'extracts' => {
           'process' => true
         },
@@ -85,7 +85,7 @@ Vagrant.configure('2') do |config|
     }
 
     chef.run_list = [
-      'recipe[odes::default]'
+      'recipe[mapzen_odes::default]'
     ]
   end
 end
