@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 lockfile=.planet_update.lock
-planet_file=<%= node[:metroextractor][:planet][:file] %>
+planet_file=<%= node[:mapzen_odes][:planet][:file] %>
 
 if [ -f ${lockfile} ]; then
   echo "Lockfile exists, exiting."
