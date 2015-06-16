@@ -50,7 +50,7 @@ default[:postgresql][:max_connections]       = '200'
 
 # planet
 default[:mapzen_odes][:planet][:timeout]     = 7200
-default[:mapzen_odes][:planet][:url]         = 'http://planet.openstreetmap.org/pbf/planet-latest.osm.pbf'
+default[:mapzen_odes][:planet][:url]         = 'planet.us-east-1.mapzen.com/planet-latest.osm.pbf'
 default[:mapzen_odes][:planet][:file]        = node[:mapzen_odes][:planet][:url].split('/').last
 
 # extracts

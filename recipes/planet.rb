@@ -3,48 +3,19 @@
 # Recipe:: planet
 #
 
-# override tempfile location so the planet download
-#   temp file goes somewhere with enough space
-ENV['TMP'] = node[:mapzen_odes][:setup][:basedir]
+packge 'python-pip'
+python_pip 'awscli'
 
-# fail if someone tries to pull something other than
-#   a pbf data file
-fail if node[:mapzen_odes][:planet][:file] !~ /\.pbf$/
+execute 'download planet' do
+  user      node[:mapzen_odes][:user][:id]
+  cwd       node[:mapzen_odes][:setup][:basedir]
+  command   "aws s3 cp s3://#{node[:mapzen_odes][:planet][:url]}/#{node[:mapzen_odes][:planet][:file]}"
 
-remote_file "#{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]}.md5" do
-  action    :create_if_missing
-  backup    false
-  source    "#{node[:mapzen_odes][:planet][:url]}.md5"
-  mode      0644
+  not_if    { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]}") }
+
   notifies  :run, 'execute[download planet]',   :immediately
   notifies  :run, 'ruby_block[verify md5]',     :immediately
   notifies  :run, 'execute[osmconvert planet]', :immediately
-end
-
-execute 'download planet' do
-  action  :nothing
-  user    node[:mapzen_odes][:user][:id]
-  command <<-EOH
-    wget --quiet \
-      -O #{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]} \
-      #{node[:mapzen_odes][:planet][:url]}
-  EOH
-  timeout node[:mapzen_odes][:planet][:timeout]
-end
-
-ruby_block 'verify md5' do
-  action :nothing
-  block do
-    require 'digest'
-
-    planet_md5  = Digest::MD5.file("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]}").hexdigest
-    md5         = File.read("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]}.md5").split(' ').first
-
-    if planet_md5 != md5
-      Chef::Log.info('Failure: the md5 of the planet we downloaded does not appear to be correct. Aborting.')
-      abort
-    end
-  end
 end
 
 execute 'osmconvert planet' do
