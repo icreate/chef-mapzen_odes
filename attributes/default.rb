@@ -57,11 +57,9 @@ default[:mapzen_odes][:planet][:file]        = node[:mapzen_odes][:planet][:url]
 default[:mapzen_odes][:osmconvert][:timeout] = 172_800
 default[:mapzen_odes][:osmconvert][:jobs]    = node[:cpu][:total]
 
-# shapes: note that the number of jobs below reflects close to the limit of what the
-#   local postgres instance can handle in terms of max connections. Not recommended
-#   to change.
-default[:mapzen_odes][:shapes][:imposm_jobs]       = 12
-default[:mapzen_odes][:shapes][:osm2pgsql_jobs]    = 8
+# shapes
+default[:mapzen_odes][:shapes][:imposm_jobs]       = 2
+default[:mapzen_odes][:shapes][:osm2pgsql_jobs]    = 2
 default[:mapzen_odes][:shapes][:osm2pgsql_timeout] = 172_800
 
 # coastlines
