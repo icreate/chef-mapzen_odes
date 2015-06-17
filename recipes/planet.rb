@@ -3,7 +3,7 @@
 # Recipe:: planet
 #
 
-packge 'python-pip'
+package 'python-pip'
 python_pip 'awscli'
 
 execute 'download planet' do
