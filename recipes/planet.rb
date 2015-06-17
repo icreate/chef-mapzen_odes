@@ -13,8 +13,6 @@ execute 'download planet' do
 
   not_if    { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]}") }
 
-  notifies  :run, 'execute[download planet]',   :immediately
-  notifies  :run, 'ruby_block[verify md5]',     :immediately
   notifies  :run, 'execute[osmconvert planet]', :immediately
 end
 
