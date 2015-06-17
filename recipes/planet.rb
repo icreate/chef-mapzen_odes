@@ -4,7 +4,10 @@
 #
 
 package 'python-pip'
-python_pip 'awscli'
+
+python_pip 'awscli' do
+  version node[:mapzen_odes][:awscli][:version]
+end
 
 execute 'download planet' do
   user      node[:mapzen_odes][:user][:id]
