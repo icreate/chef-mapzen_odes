@@ -22,14 +22,17 @@ function osm2pgsql_shapefiles
 
   # generate geojson from shp files
   #
+<% if node[:mapzen_odes][:process][:osm2pgsql_geojson] == true %>
   ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs crs:84 shp/${slug}.osm-line.geojson shp/${slug}.osm-line.shp      
   ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs crs:84 shp/${slug}.osm-point.geojson shp/${slug}.osm-point.shp    
   ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs crs:84 shp/${slug}.osm-polygon.geojson shp/${slug}.osm-polygon.shp
 
+  zip -j shp/$slug.osm2pgsql-geojson.zip shp/$slug.osm-*.geojson
+<% end %>
+
   # zip up our output
   #
   zip -j shp/${slug}.osm2pgsql-shapefiles.zip shp/${slug}.osm-*.shp shp/${slug}.osm-*.prj shp/${slug}.osm-*.dbf shp/${slug}.osm-*.shx
-  zip -j shp/$slug.osm2pgsql-geojson.zip shp/$slug.osm-*.geojson
 
   # remove source files
   #
@@ -58,15 +61,18 @@ function imposm_shapefiles
 
   declare -a arr=('admin' 'aeroways' 'amenities' 'buildings' 'landusages' 'landusages_gen0' 'landusages_gen1' 'places' 'roads' 'roads_gen0' 'roads_gen1' 'transport_areas' 'transport_points' 'waterareas' 'waterareas_gen0' 'waterareas_gen1' 'waterways')
 
+  # shps
   for i in ${arr[@]}; do
     pgsql2shp -rk -f shp/${slug}-imposm/${slug}.osm-${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
-
-    <% projection = 3857 %>
-    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:<%= projection %> -t_srs crs:84 shp/${slug}-imposm/${slug}-${i}.geojson shp/${slug}-imposm/${slug}.osm-${i}.shp
   done
-
   zip -j shp/${slug}.imposm-shapefiles.zip shp/${slug}-imposm/${slug}.osm-*.shp shp/${slug}-imposm/${slug}.osm-*.prj shp/${slug}-imposm/${slug}.osm-*.dbf shp/${slug}-imposm/${slug}.osm-*.shx
+
+<% if node[:mapzen_odes][:process][:imposm_geojson] == true %>
+  for i in ${arr[@]}; do
+    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:3857 -t_srs crs:84 shp/${slug}-imposm/${slug}-${i}.geojson shp/${slug}-imposm/${slug}.osm-${i}.shp
+  done
   zip -j shp/${slug}.imposm-geojson.zip shp/${slug}-imposm/${slug}-*.geojson
+<% end %>
 
   rm -r shp/${slug}-imposm
 

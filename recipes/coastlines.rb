@@ -11,7 +11,7 @@ execute 'wget water polygons' do
       #{node[:coastlines][:water_polygons][:url]} &&
       unzip #{node[:coastlines][:water_polygons][:file]}
   EOH
-  not_if  { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:coastlines][:water_polygons][:file]}") }
+  not_if  { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:coastlines][:water_polygons][:file]}") }
 end
 
 execute 'wget land polygons' do
@@ -22,7 +22,7 @@ execute 'wget land polygons' do
       #{node[:coastlines][:land_polygons][:url]} &&
       unzip #{node[:coastlines][:land_polygons][:file]}
   EOH
-  not_if  { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:coastlines][:land_polygons][:file]}") }
+  not_if  { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:coastlines][:land_polygons][:file]}") }
 end
 
 execute 'generate coastlines' do

@@ -1,9 +1,9 @@
 mapzen_odes changelog
 =====================
 
-0.3.1
+0.4.0
 -----
-* download coastline data on initial setup
+* make geojson generation optional
 
 0.3.0
 -----
