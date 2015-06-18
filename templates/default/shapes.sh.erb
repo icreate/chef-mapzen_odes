@@ -91,5 +91,10 @@ declare -a cities=(
 <% end -%>
 )
 
+<% if node[:mapzen_odes][:process][:osm2pgsql_shapes] == true %>
 parallel --jobs <%= node[:mapzen_odes][:shapes][:osm2pgsql_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_osm2pgsql_shapefiles.log osm2pgsql_shapefiles ::: "${cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_shapefiles.log 2>&1
+<% end %>
+
+<% if node[:mapzen_odes][:process][:imposm_shapes] == true %>
 parallel --jobs <%= node[:mapzen_odes][:shapes][:imposm_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_imposm_shapefiles.log imposm_shapefiles ::: "${cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/imposm_shapefiles.log 2>&1
+<% end %>

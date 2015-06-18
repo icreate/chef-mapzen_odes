@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.5.0
+-----
+* allow only imposm or osm2pgsql shp
+
 0.4.1
 -----
 * add some logic around setting opts
