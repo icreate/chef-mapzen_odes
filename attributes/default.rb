@@ -12,9 +12,7 @@ default[:mapzen_odes][:awscli][:version]         = '1.7.34'
 default[:mapzen_odes][:upload][:s3bucket]        = 'mapzen.odes'
 
 # the following are booleans and tell the cookbook whether or not
-#   we should produce certain types of data. Note that in order to produce
-#   shapes, you MUST procuce extracts, as the former is constructed from
-#   the latter.
+#   we should produce certain types of data.
 default[:mapzen_odes][:process][:pbf_extracts]      = false
 default[:mapzen_odes][:process][:xml_extracts]      = false
 default[:mapzen_odes][:process][:coastlines]        = false
