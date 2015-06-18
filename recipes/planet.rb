@@ -11,10 +11,10 @@ end
 
 execute 'download planet' do
   user      node[:mapzen_odes][:user][:id]
-  cwd       node[:mapzen_odes][:setup][:basedir]
+  cwd       "#{node[:mapzen_odes][:setup][:basedir]}/data"
   command   "aws s3 cp s3://#{node[:mapzen_odes][:planet][:url]} ."
 
-  not_if    { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/#{node[:mapzen_odes][:planet][:file]}") }
+  not_if    { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:planet][:file]}") }
 
   notifies  :run, 'execute[osmconvert planet]', :immediately
 end
@@ -22,7 +22,7 @@ end
 execute 'osmconvert planet' do
   action  :nothing
   user    node[:mapzen_odes][:user][:id]
-  cwd     node[:mapzen_odes][:setup][:basedir]
+  cwd    "#{node[:mapzen_odes][:setup][:basedir]}/data"
   timeout node[:mapzen_odes][:osmconvert][:timeout]
   command <<-EOH
     osmconvert #{node[:mapzen_odes][:planet][:file]} -o=planet.o5m \

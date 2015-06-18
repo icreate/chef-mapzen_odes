@@ -5,7 +5,7 @@
 
 execute 'wget water polygons' do
   user    node[:mapzen_odes][:user][:id]
-  cwd     node[:mapzen_odes][:setup][:basedir]
+  cwd     "#{node[:mapzen_odes][:setup][:basedir]}/data"
   command <<-EOH
     wget --quiet -O #{node[:coastlines][:water_polygons][:file]} \
       #{node[:coastlines][:water_polygons][:url]} &&
@@ -17,7 +17,7 @@ end
 
 execute 'wget land polygons' do
   user    node[:mapzen_odes][:user][:id]
-  cwd     node[:mapzen_odes][:setup][:basedir]
+  cwd     "#{node[:mapzen_odes][:setup][:basedir]}/data"
   command <<-EOH
     wget --quiet -O #{node[:coastlines][:land_polygons][:file]} \
       #{node[:coastlines][:land_polygons][:url]} &&

@@ -55,7 +55,7 @@ end
   end
 end
 
-%w(ex logs shp coast).each do |d|
+%w(ex data logs shp coast).each do |d|
   directory "#{node[:mapzen_odes][:setup][:basedir]}/#{d}" do
     owner node[:mapzen_odes][:user][:id]
   end
