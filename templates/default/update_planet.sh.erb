@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 lockfile=.planet_update.lock
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
@@ -12,17 +12,17 @@ else
 fi
 
 echo "Creating lockfile."
-touch ${lockfile} &&
+touch ${lockfile}
 
-  echo "Running osmupdate" &&
-  osmupdate ${planet_file} updated-${planet_file} &&
+echo "Running osmupdate"
+osmupdate ${planet_file} updated-${planet_file}
 
-  echo "Running osmconvert" &&
-  osmconvert updated-${planet_file} -o=planet_osmconvert.o5m &&
+echo "Running osmconvert"
+osmconvert updated-${planet_file} -o=planet_osmconvert.o5m
 
-  echo "Moving updates into place" &&
-  mv -f updated-${planet_file} ${planet_file} &&
-  mv -f planet_osmconvert.o5m planet.o5m
+echo "Moving updates into place"
+mv -f updated-${planet_file} ${planet_file}
+mv -f planet_osmconvert.o5m planet.o5m
 
 echo "Removing lockfile"
 rm ${lockfile}
