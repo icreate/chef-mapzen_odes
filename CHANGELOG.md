@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.6.0
+-----
+* split out pbf and xml extracts to avoid having to process both if we don't want them
+
 0.5.0
 -----
 * allow only imposm or osm2pgsql shp

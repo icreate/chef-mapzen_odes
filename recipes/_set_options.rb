@@ -1,4 +1,4 @@
-# if we're told to process anything, extracts needs to be true
+# if we're told to process anything, pbf extracts needs to be true
 if
   node[:mapzen_odes][:process][:imposm_shapes]      == true ||
   node[:mapzen_odes][:process][:osm2pgsql_shapes]   == true ||
@@ -6,7 +6,7 @@ if
   node[:mapzen_odes][:process][:osm2pgsql_geojson]  == true ||
   node[:mapzen_odes][:process][:imposm_geojson]     == true
 
-  node.set[:mapzen_odes][:process][:extracts] = true
+  node.set[:mapzen_odes][:process][:pbf_extracts] = true
 end
 
 # if we're told to process geojson, relevant shapes need to be true

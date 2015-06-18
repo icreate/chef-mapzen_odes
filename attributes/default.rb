@@ -15,7 +15,8 @@ default[:mapzen_odes][:upload][:s3bucket]        = 'mapzen.odes'
 #   we should produce certain types of data. Note that in order to produce
 #   shapes, you MUST procuce extracts, as the former is constructed from
 #   the latter.
-default[:mapzen_odes][:process][:extracts]          = false
+default[:mapzen_odes][:process][:pbf_extracts]      = false
+default[:mapzen_odes][:process][:xml_extracts]      = false
 default[:mapzen_odes][:process][:coastlines]        = false
 default[:mapzen_odes][:process][:imposm_shapes]     = false
 default[:mapzen_odes][:process][:imposm_geojson]    = false
