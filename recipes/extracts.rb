@@ -20,4 +20,5 @@ execute 'fix osmconvert perms' do
   user      node[:mapzen_odes][:user][:id]
   cwd       node[:mapzen_odes][:setup][:basedir]
   command   'chmod 644 ex/*'
+  only_if   "ls #{node[:mapzen_odes][:setup][:basedir]}/ex/*"
 end
