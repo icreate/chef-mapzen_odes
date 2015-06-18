@@ -5,6 +5,7 @@
 
 %w(
   apt::default
+  mapzen_odes::_set_options
   mapzen_odes::postgres
   mapzen_odes::user
   mapzen_odes::setup
