@@ -3,17 +3,26 @@
 lockfile=.planet_update.lock
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
 
+echo -e "Checking for lockfile... \c"
 if [ -f ${lockfile} ]; then
-  echo "Lockfile exists, exiting."
+  echo "found, exiting."
   exit 1
+else
+  echo "not found, continuing."
 fi
 
+echo "Creating lockfile."
 touch ${lockfile} &&
 
-osmupdate ${planet_file} updated-${planet_file} &&
-osmconvert updated-${planet_file} -o=planet_osmconvert.o5m &&
+  echo "Running osmupdate" &&
+  osmupdate ${planet_file} updated-${planet_file} &&
 
-mv -f updated-${planet_file} ${planet_file} &&
-mv -f planet_osmconvert.o5m planet.o5m
+  echo "Running osmconvert" &&
+  osmconvert updated-${planet_file} -o=planet_osmconvert.o5m &&
 
+  echo "Moving updates into place" &&
+  mv -f updated-${planet_file} ${planet_file} &&
+  mv -f planet_osmconvert.o5m planet.o5m
+
+echo "Removing lockfile"
 rm ${lockfile}
