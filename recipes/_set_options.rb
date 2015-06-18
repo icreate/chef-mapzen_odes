@@ -1,4 +1,6 @@
 # if we're told to process anything, pbf extracts needs to be true
+# xml extracts are the only entirely optional thing, as all formats are
+#   built off of pbf extracts
 if
   node[:mapzen_odes][:process][:imposm_shapes]      == true ||
   node[:mapzen_odes][:process][:osm2pgsql_shapes]   == true ||
