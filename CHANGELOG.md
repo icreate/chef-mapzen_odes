@@ -4,6 +4,7 @@ mapzen_odes changelog
 0.6.1
 -----
 * set -e on planet update script
+* don't need to force creation of an extract if we're only asked to build coastlines
 
 0.6.0
 -----
