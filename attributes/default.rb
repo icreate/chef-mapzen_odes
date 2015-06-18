@@ -20,11 +20,11 @@ default[:mapzen_odes][:process][:extracts]   = false
 default[:mapzen_odes][:process][:coastlines] = false
 
 # setup
-default[:mapzen_odes][:setup][:basedir]     = '/mnt/metro'
+default[:mapzen_odes][:setup][:basedir]     = '/mnt/odes'
 default[:mapzen_odes][:setup][:scriptsdir]  = '/opt/odes-scripts'
 
 # user
-default[:mapzen_odes][:user][:id]           = 'metro'
+default[:mapzen_odes][:user][:id]           = 'odes'
 default[:mapzen_odes][:user][:shell]        = '/bin/bash'
 default[:mapzen_odes][:user][:manage_home]  = false
 default[:mapzen_odes][:user][:create_group] = true
