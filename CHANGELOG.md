@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.6.1
+-----
+* set -e on planet update script
+
 0.6.0
 -----
 * split out pbf and xml extracts to avoid having to process both if we don't want them
