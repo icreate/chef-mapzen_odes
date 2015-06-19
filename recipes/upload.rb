@@ -44,7 +44,6 @@ ruby_block 'upload extracts and shapes to S3' do
     end
   end
 
-  notifies  :run, 'execute[cleanup]'
   only_if   { node[:mapzen_odes][:upload_data] == true }
 end
 
