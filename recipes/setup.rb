@@ -43,6 +43,7 @@ end
     owner   node[:mapzen_odes][:user][:id]
     source  "#{t}.erb"
     mode    0755
+    only_if { node[:mapzen_odes][:json] }
   end
 end
 
