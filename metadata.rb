@@ -4,7 +4,7 @@ maintainer_email 'grant@mapzen.com'
 license          'GPL v3'
 description      'Installs/Configures odes'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.6.2'
+version          '0.6.3'
 
 recipe 'mapzen_odes', 'Builds metro extracts ode service'
 

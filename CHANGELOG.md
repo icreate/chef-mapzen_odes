@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.6.3
+-----
+* use 4236 everywhere
+
 0.6.2
 -----
 * use 4326 for imposm

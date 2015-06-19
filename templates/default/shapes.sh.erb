@@ -23,9 +23,9 @@ function osm2pgsql_shapefiles
   # generate geojson from shp files
   #
 <% if node[:mapzen_odes][:process][:osm2pgsql_geojson] == true %>
-  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs crs:84 shp/${slug}.osm-line.geojson shp/${slug}.osm-line.shp      
-  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs crs:84 shp/${slug}.osm-point.geojson shp/${slug}.osm-point.shp    
-  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs crs:84 shp/${slug}.osm-polygon.geojson shp/${slug}.osm-polygon.shp
+  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-line.geojson shp/${slug}.osm-line.shp      
+  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-point.geojson shp/${slug}.osm-point.shp    
+  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-polygon.geojson shp/${slug}.osm-polygon.shp
 
   zip -j shp/$slug.osm2pgsql-geojson.zip shp/$slug.osm-*.geojson
 <% end %>
@@ -69,7 +69,7 @@ function imposm_shapefiles
 
 <% if node[:mapzen_odes][:process][:imposm_geojson] == true %>
   for i in ${arr[@]}; do
-    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs crs:84 shp/${slug}-imposm/${slug}-${i}.geojson shp/${slug}-imposm/${slug}.osm-${i}.shp
+    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 shp/${slug}-imposm/${slug}-${i}.geojson shp/${slug}-imposm/${slug}.osm-${i}.shp
   done
   zip -j shp/${slug}.imposm-geojson.zip shp/${slug}-imposm/${slug}-*.geojson
 <% end %>
