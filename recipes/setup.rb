@@ -43,7 +43,6 @@ end
     owner   node[:mapzen_odes][:user][:id]
     source  "#{t}.erb"
     mode    0755
-    only_if { ::File.exist?("#{node[:mapzen_odes][:setup][:scriptsdir]}/cities.json") }
   end
 end
 
