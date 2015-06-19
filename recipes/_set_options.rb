@@ -1,11 +1,10 @@
 #
-# Cookbook Name:: odes
+# Cookbook Name:: mapzen_odes
 # Recipe:: _set_options
 #
 
-# if we're told to process anything (other than coastlines), pbf extracts needs to be true.
-# xml extracts are the only entirely optional thing, as all formats are
-#   built off of pbf extracts.
+# if we're told to process these things, pbf extracts needs to be true.
+# xml extracts and coastlines don't need a pbf_extract.
 if
   node[:mapzen_odes][:process][:imposm_shapes]      == true ||
   node[:mapzen_odes][:process][:osm2pgsql_shapes]   == true ||

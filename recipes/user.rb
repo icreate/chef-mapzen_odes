@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: odes
+# Cookbook Name:: mapzen_odes
 # Recipe:: user
 #
 
