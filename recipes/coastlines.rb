@@ -33,5 +33,5 @@ execute 'generate coastlines' do
     #{node[:mapzen_odes][:setup][:scriptsdir]}/coastlines.sh \
       >#{node[:mapzen_odes][:setup][:basedir]}/logs/coastlines.log 2>&1
   EOH
-  only_if { node[:mapzen_odes][:process][:coastlines] == true }
+  only_if { node[:mapzen_odes][:json] && node[:mapzen_odes][:process][:coastlines] == true }
 end
