@@ -10,6 +10,7 @@ recipe 'mapzen_odes', 'Builds metro extracts ode service'
 
 %w(
   apt
+  ark
   osm2pgsql
   postgresql
   python
