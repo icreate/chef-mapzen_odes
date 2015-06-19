@@ -4,6 +4,7 @@ mapzen_odes changelog
 0.6.2
 -----
 * use 4326 for imposm
+* bump imposm version
 
 0.6.1
 -----
