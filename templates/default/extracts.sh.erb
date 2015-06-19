@@ -3,10 +3,6 @@
 <% data = JSON.parse(json) -%>
 <% data['cities'].each do |city, val| -%>
   <% if node[:mapzen_odes][:process][:pbf_extracts] == true %>
-    osmconvert data/planet.o5m --out-pbf -b=<%= val['bbox']['left'] %>,<%= val['bbox']['bottom'] %>,<%= val['bbox']['right'] %>,<%= val['bbox']['top'] %> --drop-broken-refs -o=ex/<%= city %>.osm.pbf
-  <% end %>
-
-  <% if node[:mapzen_odes][:process][:xml_extracts] == true %>
-    osmconvert ex/<%= city %>.osm.pbf --out-osm -o=ex/<%= city %>.osm && pbzip2 -f ex/<%= city %>.osm
+    osmconvert data/planet.o5m --out-pbf -b=<%= val['bbox']['left'] %>,<%= val['bbox']['bottom'] %>,<%= val['bbox']['right'] %>,<%= val['bbox']['top'] %> --drop-broken-refs -o=ex/<%= city %>.osm.pbf <% if node[:mapzen_odes][:process][:xml_extracts] == true %>&& osmconvert ex/<%= city %>.osm.pbf --out-osm -o=ex/<%= city %>.osm && pbzip2 -f ex/<%= city %>.osm <% end %>
   <% end %>
 <% end %>
