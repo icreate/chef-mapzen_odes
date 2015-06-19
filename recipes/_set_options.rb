@@ -4,8 +4,9 @@
 #
 
 # if we're told to process these things, pbf extracts needs to be true.
-# xml extracts and coastlines don't need a pbf_extract.
+# only coastlines don't need a pbf_extract.
 if
+  node[:mapzen_odes][:process][:xml_extracts]       == true ||
   node[:mapzen_odes][:process][:imposm_shapes]      == true ||
   node[:mapzen_odes][:process][:osm2pgsql_shapes]   == true ||
   node[:mapzen_odes][:process][:osm2pgsql_geojson]  == true ||
