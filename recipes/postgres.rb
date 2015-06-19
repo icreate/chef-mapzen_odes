@@ -4,7 +4,7 @@
 #
 
 # note that if you're not using the local postgres installation, you'll need to manually
-#   enable the postgis extension in your database.
+#   enable the postgis and hstore extensions in your database.
 if node[:mapzen_odes][:postgres][:host] == 'localhost'
   package 'postgis'
 
