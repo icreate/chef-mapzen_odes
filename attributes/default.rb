@@ -11,16 +11,6 @@ default[:mapzen_odes][:upload][:aws_sdk_version]                  = '1.61.0'
 default[:mapzen_odes][:awscli][:version]                          = '1.7.34'
 default[:mapzen_odes][:upload][:s3bucket]                         = 'mapzen.odes'
 
-# the following are booleans and tell the cookbook whether or not
-#   we should produce certain types of data.
-default[:mapzen_odes][:process][:pbf_extracts]                    = false
-default[:mapzen_odes][:process][:xml_extracts]                    = false
-default[:mapzen_odes][:process][:coastlines]                      = false
-default[:mapzen_odes][:process][:imposm_shapes]                   = false
-default[:mapzen_odes][:process][:imposm_geojson]                  = false
-default[:mapzen_odes][:process][:osm2pgsql_shapes]                = false
-default[:mapzen_odes][:process][:osm2pgsql_geojson]               = false
-
 # setup
 default[:mapzen_odes][:setup][:basedir]                           = '/mnt/odes'
 default[:mapzen_odes][:setup][:scriptsdir]                        = '/opt/odes-scripts'
@@ -66,8 +56,9 @@ default[:mapzen_odes][:shapes][:osm2pgsql_jobs]                   = 2
 default[:mapzen_odes][:shapes][:osm2pgsql_timeout]                = 172_800
 
 # coastlines
-default[:coastlines][:generate][:timeout]                         = 7_200
-default[:coastlines][:water_polygons][:url]                       = 'http://data.openstreetmapdata.com/water-polygons-split-4326.zip'
-default[:coastlines][:land_polygons][:url]                        = 'http://data.openstreetmapdata.com/land-polygons-split-4326.zip'
-default[:coastlines][:water_polygons][:file]                      = node[:coastlines][:water_polygons][:url].split('/').last
-default[:coastlines][:land_polygons][:file]                       = node[:coastlines][:land_polygons][:url].split('/').last
+default[:mapzen_odes][:coastlines][:jobs]                         = node[:cpu][:total]
+default[:mapzen_odes][:coastlines][:generate][:timeout]           = 7_200
+default[:mapzen_odes][:coastlines][:water_polygons][:url]         = 'http://data.openstreetmapdata.com/water-polygons-split-4326.zip'
+default[:mapzen_odes][:coastlines][:land_polygons][:url]          = 'http://data.openstreetmapdata.com/land-polygons-split-4326.zip'
+default[:mapzen_odes][:coastlines][:water_polygons][:file]        = node[:mapzen_odes][:coastlines][:water_polygons][:url].split('/').last
+default[:mapzen_odes][:coastlines][:land_polygons][:file]         = node[:mapzen_odes][:coastlines][:land_polygons][:url].split('/').last

@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 
 function package_coast
 {
@@ -26,10 +25,13 @@ function package_coast
   rm coast/${slug}.land_coast.*
   rm coast/${slug}.water_coast.*
 }
+export -f package_coast
 
 <% require 'json' -%>
-<% json = File.read("#{node[:mapzen_odes][:setup][:scriptsdir]}/cities.json") -%>
-<% data = JSON.parse(json) -%>
+<% data = JSON.parse(node[:mapzen_odes][:json]) -%>
+
 <% data['cities'].each do |city, v| -%>
-package_coast <%= city %> "<%= v['bbox']['top'] %>" "<%= v['bbox']['left'] %>" "<%= v['bbox']['bottom'] %>" "<%= v['bbox']['right'] %>"
+  <% if node[:mapzen_odes][city][:coastlines] == true -%>
+    package_coast <%= city %> <%= v['bbox']['top'] %> <%= v['bbox']['left'] %> <%= v['bbox']['bottom'] %> <%= v['bbox']['right'] %>
+  <% end %>
 <% end -%>

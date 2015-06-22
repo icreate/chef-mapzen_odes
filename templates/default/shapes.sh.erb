@@ -1,5 +1,8 @@
 #!/bin/bash
-#
+
+<% require 'json' -%>
+<% data = JSON.parse(node[:mapzen_odes][:json]) -%>
+
 PGPASSWORD=<%= node[:mapzen_odes][:postgres][:password] %>
 OSMOPTS="--hstore --host <%= node[:mapzen_odes][:postgres][:host] %> --database <%= node[:mapzen_odes][:postgres][:db] %> --username <%= node[:mapzen_odes][:postgres][:user] %>"
 PGSQLOPTS="-h <%= node[:mapzen_odes][:postgres][:host] %> -d <%= node[:mapzen_odes][:postgres][:db] %> -U <%= node[:mapzen_odes][:postgres][:user] %>"
@@ -22,13 +25,15 @@ function osm2pgsql_shapefiles
 
   # generate geojson from shp files
   #
-<% if node[:mapzen_odes][:process][:osm2pgsql_geojson] == true %>
-  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-line.geojson shp/${slug}.osm-line.shp      
-  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-point.geojson shp/${slug}.osm-point.shp    
-  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-polygon.geojson shp/${slug}.osm-polygon.shp
-
-  zip -j shp/$slug.osm2pgsql-geojson.zip shp/$slug.osm-*.geojson
-<% end %>
+  <% data['cities'].keys.each do |city| -%>
+    <% if node[:mapzen_odes][city][:osm2pgsql_geojson] == true %>
+      ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-line.geojson shp/${slug}.osm-line.shp      
+      ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-point.geojson shp/${slug}.osm-point.shp    
+      ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}.osm-polygon.geojson shp/${slug}.osm-polygon.shp
+    
+      zip -j shp/$slug.osm2pgsql-geojson.zip shp/$slug.osm-*.geojson
+    <% end -%>
+  <% end -%>
 
   # zip up our output
   #
@@ -67,12 +72,14 @@ function imposm_shapefiles
   done
   zip -j shp/${slug}.imposm-shapefiles.zip shp/${slug}-imposm/${slug}.osm-*.shp shp/${slug}-imposm/${slug}.osm-*.prj shp/${slug}-imposm/${slug}.osm-*.dbf shp/${slug}-imposm/${slug}.osm-*.shx
 
-<% if node[:mapzen_odes][:process][:imposm_geojson] == true %>
-  for i in ${arr[@]}; do
-    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 shp/${slug}-imposm/${slug}-${i}.geojson shp/${slug}-imposm/${slug}.osm-${i}.shp
-  done
-  zip -j shp/${slug}.imposm-geojson.zip shp/${slug}-imposm/${slug}-*.geojson
-<% end %>
+  <% data['cities'].keys.each do |city| -%>
+    <% if node[:mapzen_odes][city][:imposm_geojson] == true %>
+      for i in ${arr[@]}; do
+        ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 shp/${slug}-imposm/${slug}-${i}.geojson shp/${slug}-imposm/${slug}.osm-${i}.shp
+      done
+      zip -j shp/${slug}.imposm-geojson.zip shp/${slug}-imposm/${slug}-*.geojson
+    <% end %>
+  <% end -%>
 
   rm -r shp/${slug}-imposm
 
@@ -82,19 +89,32 @@ function imposm_shapefiles
 }
 export -f imposm_shapefiles
 
-declare -a cities=(
-<% require 'json' -%>
-<% json = File.read("#{node[:mapzen_odes][:setup][:scriptsdir]}/cities.json") -%>
-<% data = JSON.parse(json) %>
+<% osm2pgsql_cities_arr = [] -%>
+<% imposm_cities_arr    = [] -%>
+
 <% data['cities'].keys.each do |city| -%>
-'<%= city %>'
+  <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
+    <% osm2pgsql_cities_arr = [] -%>
+    <% osm2pgsql_cities_arr << city -%>
+  <% end %>
+
+  <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
+    <% imposm_cities_arr = [] -%>
+    <% imposm_cities_arr << city -%>
+  <% end %>
 <% end -%>
-)
 
-<% if node[:mapzen_odes][:process][:osm2pgsql_shapes] == true %>
-parallel --jobs <%= node[:mapzen_odes][:shapes][:osm2pgsql_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_osm2pgsql_shapefiles.log osm2pgsql_shapefiles ::: "${cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_shapefiles.log 2>&1
-<% end %>
+<% osm2pgsql_cities_arr.each do |osm2pgsql_city| -%>
+  declare -a osm2pgsql_cities=(
+    '<%= osm2pgsql_city %>'
+  )
+<% end -%>
+<% imposm_cities_arr.each do |imposm_city| -%>
+  declare -a imposm_cities=(
+    '<%= imposm_city %>'
+  )
+<% end -%>
 
-<% if node[:mapzen_odes][:process][:imposm_shapes] == true %>
-parallel --jobs <%= node[:mapzen_odes][:shapes][:imposm_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_imposm_shapefiles.log imposm_shapefiles ::: "${cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/imposm_shapefiles.log 2>&1
-<% end %>
+parallel --jobs <%= node[:mapzen_odes][:shapes][:osm2pgsql_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_osm2pgsql_shapefiles.log osm2pgsql_shapefiles ::: "${osm2pgsql_cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_shapefiles.log 2>&1
+
+parallel --jobs <%= node[:mapzen_odes][:shapes][:imposm_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_imposm_shapefiles.log imposm_shapefiles ::: "${imposm_cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/imposm_shapefiles.log 2>&1

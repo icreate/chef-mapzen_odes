@@ -30,13 +30,6 @@ directory node[:mapzen_odes][:setup][:scriptsdir] do
   owner node[:mapzen_odes][:user][:id]
 end
 
-# cities
-file "#{node[:mapzen_odes][:setup][:scriptsdir]}/cities.json" do
-  owner     node[:mapzen_odes][:user][:id]
-  content   node[:mapzen_odes][:json]
-  only_if   { node[:mapzen_odes][:json] }
-end
-
 # scripts
 %w(extracts.sh shapes.sh coastlines.sh).each do |t|
   template "#{node[:mapzen_odes][:setup][:scriptsdir]}/#{t}" do

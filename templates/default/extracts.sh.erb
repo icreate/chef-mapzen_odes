@@ -1,8 +1,7 @@
 <% require 'json' -%>
-<% json = File.read("#{node[:mapzen_odes][:setup][:scriptsdir]}/cities.json") -%>
-<% data = JSON.parse(json) -%>
+<% data = JSON.parse(node[:mapzen_odes][:json]) -%>
 <% data['cities'].each do |city, val| -%>
-  <% if node[:mapzen_odes][:process][:pbf_extracts] == true %>
-    osmconvert data/planet.o5m --out-pbf -b=<%= val['bbox']['left'] %>,<%= val['bbox']['bottom'] %>,<%= val['bbox']['right'] %>,<%= val['bbox']['top'] %> --drop-broken-refs -o=ex/<%= city %>.osm.pbf <% if node[:mapzen_odes][:process][:xml_extracts] == true %>&& osmconvert ex/<%= city %>.osm.pbf --out-osm -o=ex/<%= city %>.osm && pbzip2 -f ex/<%= city %>.osm <% end %>
+  <% if node[:mapzen_odes][city][:pbf_extracts] == true %>
+    osmconvert data/planet.o5m --out-pbf -b=<%= val['bbox']['left'] %>,<%= val['bbox']['bottom'] %>,<%= val['bbox']['right'] %>,<%= val['bbox']['top'] %> --drop-broken-refs -o=ex/<%= city %>.osm.pbf <% if node[:mapzen_odes][city][:xml_extracts] == true %>&& osmconvert ex/<%= city %>.osm.pbf --out-osm -o=ex/<%= city %>.osm && pbzip2 -f ex/<%= city %>.osm <% end %>
   <% end %>
 <% end %>

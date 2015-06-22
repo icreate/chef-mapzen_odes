@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.7.0
+-----
+* total revamp
+
 0.6.3
 -----
 * use 4236 everywhere
