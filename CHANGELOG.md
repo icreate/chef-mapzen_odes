@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.8.1
+-----
+* simplify shapes and coastlines template code
+
 0.8.0
 -----
 * parallel coastlines

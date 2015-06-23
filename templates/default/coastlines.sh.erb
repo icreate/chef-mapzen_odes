@@ -29,7 +29,6 @@ export -f package_coast
 
 <% require 'json' -%>
 <% data = JSON.parse(node[:mapzen_odes][:json]) -%>
-<% cmdline = [] -%>
 
 <% data['cities'].each do |city, val| -%>
   <% if node[:mapzen_odes][city][:coastlines] == true -%>
@@ -38,8 +37,10 @@ export -f package_coast
 <% end -%>
 
 declare -a coast_cmd=(
-<% cmdline.each do |coast_cmd| -%>
-  '<%= coast_cmd %>'
+<% data['cities'].each do |city, val| -%>
+  <% if node[:mapzen_odes][city][:coastlines] == true -%>
+    "package_coast <%= city %> <%= val['bbox']['left'] %> <%= val['bbox']['bottom'] %> <%= val['bbox']['right'] %> <%= val['bbox']['top'] %>"
+  <% end -%>
 <% end -%>
 )
 

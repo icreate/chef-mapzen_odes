@@ -89,27 +89,19 @@ function imposm_shapefiles
 }
 export -f imposm_shapefiles
 
-<% osm2pgsql_cities_arr = [] -%>
-<% imposm_cities_arr    = [] -%>
-
+declare -a osm2pgsql_cities=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
-    <% osm2pgsql_cities_arr << city -%>
-  <% end %>
-
-  <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
-    <% imposm_cities_arr << city -%>
+    <%= city -%>
   <% end -%>
 <% end -%>
-
-declare -a osm2pgsql_cities=(
-<% osm2pgsql_cities_arr.each do |osm2pgsql_city| -%>
-  '<%= osm2pgsql_city %>'
-<% end -%>
 )
+
 declare -a imposm_cities=(
-<% imposm_cities_arr.each do |imposm_city| -%>
-  '<%= imposm_city %>'
+<% data['cities'].keys.each do |city| -%>
+  <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
+    <%= city -%>
+  <% end -%>
 <% end -%>
 )
 
