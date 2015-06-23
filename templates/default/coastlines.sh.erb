@@ -18,12 +18,12 @@ function package_coast
 
     zip -j - coast/${slug}.water_coast.??? > coast/${slug}.water.coastline.zip
     zip -j - coast/${slug}.land_coast.??? > coast/${slug}.land.coastline.zip
+
+    rm coast/${slug}.land_coast.*
+    rm coast/${slug}.water_coast.*
   else
     echo "Size not > 4, skipping ${slug}.water"
   fi
-
-  rm coast/${slug}.land_coast.*
-  rm coast/${slug}.water_coast.*
 }
 export -f package_coast
 
@@ -33,14 +33,14 @@ export -f package_coast
 
 <% data['cities'].each do |city, val| -%>
   <% if node[:mapzen_odes][city][:coastlines] == true -%>
-    <% cmdline << "package_coast <%= #{city} %> <%= val['bbox']['left'] %> <%= val['bbox']['bottom'] %> <%= val['bbox']['right'] %> <%= val['bbox']['top'] %> -%>
-  <% end %>
+    <% cmdline << "package_coast #{city} #{val['bbox']['left']} #{val['bbox']['bottom']} #{val['bbox']['right']} #{val['bbox']['top']}" -%>
+  <% end -%>
 <% end -%>
 
-<% cmdline.each do |cmd| -%>
-  declare -a cmd=(
-    "<%= cmd %>"
-  )
+declare -a coast_cmd=(
+<% cmdline.each do |coast_cmd| -%>
+  '<%= coast_cmd %>'
 <% end -%>
+)
 
-parallel --jobs <%= node[:mapzen_odes][:coastlines][:jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_coastlines.log ::: "${cmd[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_coastlines.log 2>&1
+parallel --jobs <%= node[:mapzen_odes][:coastlines][:jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_coastlines.log ::: "${coast_cmd[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_coastlines.log 2>&1
