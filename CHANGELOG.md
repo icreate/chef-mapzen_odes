@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.8.0
+-----
+* parallel coastlines
+
 0.7.0
 -----
 * total revamp
