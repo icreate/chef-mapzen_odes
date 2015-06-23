@@ -99,7 +99,7 @@ export -f imposm_shapefiles
 
   <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
     <% imposm_cities_arr << city -%>
-  <% end %>
+  <% end -%>
 <% end -%>
 
 declare -a osm2pgsql_cities=(
