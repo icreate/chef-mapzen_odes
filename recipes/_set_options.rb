@@ -21,7 +21,7 @@ unless node[:mapzen_odes][:json].nil?
     if val['process']
       val['process'].each do |opt, v|
         if v == true
-          log "Setting node attribute: node[:mapzen_odes][#{city}][#{opt}] = true"
+          log "Setting node attribute: node[:mapzen_odes][:#{city}][:#{opt}] = true"
           node.set[:mapzen_odes][city][opt] = true
         end
       end
