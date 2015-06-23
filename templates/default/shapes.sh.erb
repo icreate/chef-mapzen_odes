@@ -94,12 +94,10 @@ export -f imposm_shapefiles
 
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
-    <% osm2pgsql_cities_arr = [] -%>
     <% osm2pgsql_cities_arr << city -%>
   <% end %>
 
   <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
-    <% imposm_cities_arr = [] -%>
     <% imposm_cities_arr << city -%>
   <% end %>
 <% end -%>

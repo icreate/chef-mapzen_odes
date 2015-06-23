@@ -29,9 +29,18 @@ export -f package_coast
 
 <% require 'json' -%>
 <% data = JSON.parse(node[:mapzen_odes][:json]) -%>
+<% cmdline = [] -%>
 
-<% data['cities'].each do |city, v| -%>
+<% data['cities'].each do |city, val| -%>
   <% if node[:mapzen_odes][city][:coastlines] == true -%>
-    package_coast <%= city %> <%= v['bbox']['top'] %> <%= v['bbox']['left'] %> <%= v['bbox']['bottom'] %> <%= v['bbox']['right'] %>
+    <% cmdline << "package_coast <%= #{city} %> <%= val['bbox']['left'] %> <%= val['bbox']['bottom'] %> <%= val['bbox']['right'] %> <%= val['bbox']['top'] %> -%>
   <% end %>
 <% end -%>
+
+<% cmdline.each do |cmd| -%>
+  declare -a cmd=(
+    "<%= cmd %>"
+  )
+<% end -%>
+
+parallel --jobs <%= node[:mapzen_odes][:coastlines][:jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_coastlines.log ::: "${cmd[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_coastlines.log 2>&1
