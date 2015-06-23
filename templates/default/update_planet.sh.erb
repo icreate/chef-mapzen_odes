@@ -5,6 +5,8 @@ set -e
 lockfile=.planet_update.lock
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
 
+echo "Starting run at $(date)."
+
 echo -e "Checking for lockfile... \c"
 if [ -f ${lockfile} ]; then
   echo "found, exiting."
@@ -16,15 +18,17 @@ fi
 echo "Creating lockfile."
 touch ${lockfile}
 
-echo "Running osmupdate"
+echo "Running osmupdate."
 osmupdate ${planet_file} updated-${planet_file}
 
-echo "Running osmconvert"
+echo "Running osmconvert."
 osmconvert updated-${planet_file} -o=planet_osmconvert.o5m
 
-echo "Moving updates into place"
+echo "Moving updates into place."
 mv -f updated-${planet_file} ${planet_file}
 mv -f planet_osmconvert.o5m planet.o5m
 
-echo "Removing lockfile"
+echo "Removing lockfile."
 rm ${lockfile}
+
+echo "Finishing run at $(date)."
