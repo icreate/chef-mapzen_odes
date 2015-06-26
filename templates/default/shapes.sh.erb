@@ -31,13 +31,13 @@ function osm2pgsql_shapefiles
       ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_point.geojson shp/${slug}_osm_point.shp
       ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_polygon.geojson shp/${slug}_osm_polygon.shp
     
-      zip -j shp/${slug}_osm2pgsql_geojson.zip shp/${slug}_osm_*.geojson
+      zip -j shp/${slug}.osm2pgsql_geojson.zip shp/${slug}_osm_*.geojson
     <% end -%>
   <% end -%>
 
   # zip up our output
   #
-  zip -j shp/${slug}_osm2pgsql_shapefiles.zip shp/${slug}_osm_*.shp shp/${slug}_osm_*.prj shp/${slug}_osm_*.dbf shp/${slug}_osm_*.shx
+  zip -j shp/${slug}.osm2pgsql_shapefiles.zip shp/${slug}_osm_*.shp shp/${slug}_osm_*.prj shp/${slug}_osm_*.dbf shp/${slug}_osm_*.shx
 
   # remove source files
   #
@@ -70,14 +70,14 @@ function imposm_shapefiles
   for i in ${arr[@]}; do
     pgsql2shp -rk -f shp/${slug}-imposm/${slug}_osm_${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
   done
-  zip -j shp/${slug}_imposm_shapefiles.zip shp/${slug}-imposm/${slug}_osm_*.shp shp/${slug}-imposm/${slug}_osm_*.prj shp/${slug}-imposm/${slug}_osm_*.dbf shp/${slug}-imposm/${slug}_osm_*.shx
+  zip -j shp/${slug}.imposm_shapefiles.zip shp/${slug}-imposm/${slug}_osm_*.shp shp/${slug}-imposm/${slug}_osm_*.prj shp/${slug}-imposm/${slug}_osm_*.dbf shp/${slug}-imposm/${slug}_osm_*.shx
 
   <% data['cities'].keys.each do |city| -%>
     <% if node[:mapzen_odes][city][:imposm_geojson] == true %>
       for i in ${arr[@]}; do
         ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 shp/${slug}-imposm/${slug}_${i}.geojson shp/${slug}-imposm/${slug}_osm_${i}.shp
       done
-      zip -j shp/${slug}_imposm_geojson.zip shp/${slug}-imposm/${slug}_*.geojson
+      zip -j shp/${slug}.imposm_geojson.zip shp/${slug}-imposm/${slug}_*.geojson
     <% end %>
   <% end -%>
 
