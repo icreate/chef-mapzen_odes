@@ -59,29 +59,28 @@ function imposm_shapefiles
 {
   slug=$1
   prefix=${slug//-/_}
+  tmpdir=shp/${slug}-imposm
 
-  mkdir shp/${slug}-imposm
-
-  imposm3 import -mapping <%= node[:mapzen_odes][:setup][:scriptsdir] %>/mapping.json -read ex/${slug}.osm.pbf -cachedir shp/${slug}-imposm -srid 4326 -write -connection postgis://<%= node[:mapzen_odes][:postgres][:user] %>:<%= node[:mapzen_odes][:postgres][:password] %>@<%= node[:mapzen_odes][:postgres][:host] %>/<%= node[:mapzen_odes][:postgres][:db] %>?prefix=${prefix}_ -deployproduction
+  imposm3 import -mapping <%= node[:mapzen_odes][:setup][:scriptsdir] %>/mapping.json -read ex/${slug}.osm.pbf -cachedir ${tmpdir} -srid 4326 -write -connection postgis://<%= node[:mapzen_odes][:postgres][:user] %>:<%= node[:mapzen_odes][:postgres][:password] %>@<%= node[:mapzen_odes][:postgres][:host] %>/<%= node[:mapzen_odes][:postgres][:db] %>?prefix=${prefix}_ -deployproduction
 
   declare -a arr=('admin' 'aeroways' 'amenities' 'buildings' 'landusages' 'landusages_gen0' 'landusages_gen1' 'places' 'roads' 'roads_gen0' 'roads_gen1' 'transport_areas' 'transport_points' 'waterareas' 'waterareas_gen0' 'waterareas_gen1' 'waterways')
 
   # shps
   for i in ${arr[@]}; do
-    pgsql2shp -rk -f shp/${slug}-imposm/${slug}_osm_${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
+    pgsql2shp -rk -f shp/${tmpdir}/${slug}_osm_${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
   done
-  zip -j shp/${slug}.imposm-shapefiles.zip shp/${slug}-imposm/${slug}_osm_*.shp shp/${slug}-imposm/${slug}_osm_*.prj shp/${slug}-imposm/${slug}_osm_*.dbf shp/${slug}-imposm/${slug}_osm_*.shx
+  zip -j shp/${slug}.imposm-shapefiles.zip ${tmpdir}/${slug}_osm_*.shp ${tmpdir}/${slug}_osm_*.prj ${tmpdir}/${slug}_osm_*.dbf ${tmpdir}/${slug}_osm_*.shx
 
   <% data['cities'].keys.each do |city| -%>
     <% if node[:mapzen_odes][city][:imposm_geojson] == true %>
       for i in ${arr[@]}; do
-        ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 shp/${slug}-imposm/${slug}_${i}.geojson shp/${slug}-imposm/${slug}_osm_${i}.shp
+        ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 ${tmpdir}/${slug}_${i}.geojson ${tmpdir}/${slug}_osm_${i}.shp
       done
-      zip -j shp/${slug}.imposm-geojson.zip shp/${slug}-imposm/${slug}_*.geojson
+      zip -j shp/${slug}.imposm-geojson.zip ${tmpdir}/${slug}_*.geojson
     <% end %>
   <% end -%>
 
-  rm -r shp/${slug}-imposm
+  rm -r ${tmpdir}
 
   for i in ${arr[@]}; do
     echo "DROP TABLE ${prefix}_${i} CASCADE" | psql ${PGSQLOPTS}
