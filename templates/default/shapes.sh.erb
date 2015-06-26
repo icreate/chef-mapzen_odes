@@ -70,7 +70,7 @@ function imposm_shapefiles
   for i in ${arr[@]}; do
     pgsql2shp -rk -f shp/${slug}-imposm/${slug}_osm_${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
   done
-  zip -j shp/${slug}.imposm-shapefiles.zip shp/${slug}-imposm/${slug}_osm_*.shp shp/${slug}-imposm/${slug}_osm_*.prj shp/${slug}-imposm/${slug}_osm_*.dbf shp/${slug}-imposm/${slug}_osm_*.shx
+  zip -j shp/${slug}_imposm_shapefiles.zip shp/${slug}-imposm/${slug}_osm_*.shp shp/${slug}-imposm/${slug}_osm_*.prj shp/${slug}-imposm/${slug}_osm_*.dbf shp/${slug}-imposm/${slug}_osm_*.shx
 
   <% data['cities'].keys.each do |city| -%>
     <% if node[:mapzen_odes][city][:imposm_geojson] == true %>
