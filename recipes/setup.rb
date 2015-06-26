@@ -40,7 +40,7 @@ end
   end
 end
 
-%w(osm2pgsql.style merge-geojson.py mapping.json).each do |f|
+%w(osm2pgsql.style mapping.json).each do |f|
   cookbook_file "#{node[:mapzen_odes][:setup][:scriptsdir]}/#{f}" do
     owner   node[:mapzen_odes][:user][:id]
     source  f
