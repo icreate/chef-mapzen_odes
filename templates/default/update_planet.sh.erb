@@ -2,7 +2,7 @@
 
 set -e
 
-lockfile=.planet_update.lock
+lockfile=/tmp/planet_update.lock
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
 
 echo "Starting run at $(date)."
