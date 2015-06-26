@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.9.0
+-----
+* change file outputs to replace . with _
+
 0.8.1
 -----
 * simplify shapes and coastlines template code
