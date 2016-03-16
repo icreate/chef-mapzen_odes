@@ -7,6 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# get region
+search('aws_opsworks_stack').first do |stack|
+  node.set[:mapzen_odes][:region] = stack['region']
+end
+
 gem_package 'aws-sdk' do
   version node[:mapzen_odes][:upload][:aws_sdk_version]
 end
@@ -23,7 +28,7 @@ ruby_block 'upload extracts and shapes to S3' do
       "#{node[:mapzen_odes][:setup][:basedir]}/coast"
     ]
 
-    region  = node[:opsworks][:instance][:region]
+    region  = node[:mapzen_odes][:region]
     bucket  = node[:mapzen_odes][:upload][:s3bucket]
     s3      = AWS::S3.new(region: region)
 
@@ -44,7 +49,7 @@ ruby_block 'upload extracts and shapes to S3' do
     end
   end
 
-  only_if   { node[:mapzen_odes][:upload_data] == true }
+  only_if { node[:mapzen_odes][:upload_data] == true }
 end
 
 execute 'cleanup' do
