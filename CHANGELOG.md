@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.10.0
+------
+* chef 12
+
 0.9.0
 -----
 * change file outputs to replace . with _
