@@ -37,8 +37,8 @@ ruby_block 'upload extracts and shapes to S3' do
         next if file == '.' || file == '..'
 
         begin
-          obj = s3.buckets[bucket].objects[file]
-          obj.write(file: "#{dir}/#{file}", content_type: 'binary/octet-stream')
+          obj = s3.bucket(bucket).object(file)
+          obj.upload_file("#{dir}/#{file}", content_type: 'binary/octet-stream')
         rescue StandardError => e
           Chef::Log.info("Caught exception while uploading object #{file} to S3 bucket #{bucket}: #{e}")
           abort
