@@ -20,8 +20,8 @@ execute 'download planet' do
 end
 
 execute 'osmconvert planet' do
-  action  :nothing
-  user    node[:mapzen_odes][:user][:id]
+  action :nothing
+  user   node[:mapzen_odes][:user][:id]
   cwd    "#{node[:mapzen_odes][:setup][:basedir]}/data"
   timeout node[:mapzen_odes][:osmconvert][:timeout]
   command <<-EOH

@@ -5,7 +5,7 @@ require 'rainbow/ext/string'
 desc 'Run integration tests: foodcritic, rubocop, rspec'
 task :build do
   puts "\nRunning foodcritic".color(:blue)
-  sh 'foodcritic --chef-version 11.10 --tags ~FC001 --epic-fail correctness .'
+  sh 'foodcritic --chef-version 12 --tags ~FC001 --epic-fail correctness .'
 
   puts 'Running rubocop'.color(:blue)
   sh 'rubocop .'
