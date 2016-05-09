@@ -25,7 +25,7 @@ default[:mapzen_odes][:user][:ssh_keygen]                         = false
 # imposm
 default[:mapzen_odes][:imposm][:version]                          = '0.2'
 default[:mapzen_odes][:imposm][:installdir]                       = '/usr/local'
-default[:mapzen_odes][:imposm][:url]                              = 'http://imposm.org/static/rel/imposm3-0.1dev-20150515-593f252-linux-x86-64.tar.gz'
+default[:mapzen_odes][:imposm][:url]                              = 'http://imposm.org/static/rel/imposm3-0.2.0dev-20160311-77162d9-linux-x86-64.tar.gz'
 
 # postgres
 default[:mapzen_odes][:postgres][:host]                           = 'localhost' # setting to something other than localhost will result in the local postgres installation being skipped
