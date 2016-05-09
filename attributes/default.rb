@@ -7,8 +7,8 @@
 default[:mapzen_odes][:json]                                      = nil
 default[:mapzen_odes][:upload_data]                               = false
 
-default[:mapzen_odes][:upload][:aws_sdk_version]                  = '2.2.26'
-default[:mapzen_odes][:awscli][:version]                          = '1.10.14'
+default[:mapzen_odes][:upload][:aws_sdk_version]                  = '2.3.2'
+default[:mapzen_odes][:awscli][:version]                          = '1.10.26'
 default[:mapzen_odes][:upload][:s3bucket]                         = 'mapzen.odes'
 
 # setup
