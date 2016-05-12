@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.10.2
+------
+* aws-sdk install should be a chef-gem to support upload
+
 0.10.1
 ------
 * add aws-sdk gem

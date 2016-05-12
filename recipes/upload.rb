@@ -12,8 +12,9 @@ search('aws_opsworks_stack').first do |stack|
   node.set[:mapzen_odes][:region] = stack['region']
 end
 
-gem_package 'aws-sdk' do
-  version node[:mapzen_odes][:upload][:aws_sdk_version]
+chef_gem 'aws-sdk' do
+  version       node[:mapzen_odes][:upload][:aws_sdk_version]
+  compile_time  false
 end
 
 # upload
