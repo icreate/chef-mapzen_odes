@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.10.1
+------
+* add aws-sdk gem
+
 0.10.0
 ------
 * chef 12
