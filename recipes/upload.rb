@@ -8,7 +8,7 @@
 #
 
 # get region
-stack = search("aws_opsworks_stack").first
+stack = search('aws_opsworks_stack').first
 node.set[:mapzen_odes][:region] = stack['region']
 
 chef_gem 'aws-sdk' do
