@@ -31,7 +31,7 @@ ruby_block 'upload extracts and shapes to S3' do
 
     region  = node[:mapzen_odes][:region]
     bucket  = node[:mapzen_odes][:upload][:s3bucket]
-    s3      = AWS::S3.new(region: region)
+    s3      = Aws::S3::Resource.new(region: region)
 
     upload_dirs.each do |dir|
       Dir.foreach(dir) do |file|
