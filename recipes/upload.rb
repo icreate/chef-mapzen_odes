@@ -14,6 +14,8 @@ node.set[:mapzen_odes][:region] = stack['region']
 chef_gem 'aws-sdk' do
   version       node[:mapzen_odes][:upload][:aws_sdk_version]
   compile_time  false
+  retries       2
+  retry_delay   30
 end
 
 # upload
