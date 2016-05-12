@@ -8,9 +8,8 @@
 #
 
 # get region
-search('aws_opsworks_stack').first do |stack|
-  node.set[:mapzen_odes][:region] = stack['region']
-end
+stack = search("aws_opsworks_stack").first
+node.set[:mapzen_odes][:region] = stack['region']
 
 chef_gem 'aws-sdk' do
   version       node[:mapzen_odes][:upload][:aws_sdk_version]
@@ -50,10 +49,12 @@ ruby_block 'upload extracts and shapes to S3' do
     end
   end
 
+  notifies :run, 'execute[cleanup]', :immediately
   only_if { node[:mapzen_odes][:upload_data] == true }
 end
 
 execute 'cleanup' do
+  action  :nothing
   user    node[:mapzen_odes][:user][:id]
   command <<-EOH
     rm -f #{node[:mapzen_odes][:setup][:basedir]}/ex/* &&
