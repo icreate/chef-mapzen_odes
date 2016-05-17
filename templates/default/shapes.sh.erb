@@ -13,7 +13,7 @@ export PGPASSWORD OSMOPTS PGSQLOPTS PGSQL2SHPOPTS SHAPE_ENCODING
 function osm2pgsql_shapefiles
 {
   slug=$1
-  prefix=${slug//-/_}_osm
+  prefix=osm_${slug//-/_}
 
   # generate shp files
   #
@@ -58,7 +58,7 @@ export -f osm2pgsql_shapefiles
 function imposm_shapefiles
 {
   slug=$1
-  prefix=${slug//-/_}
+  prefix=imposm_${slug//-/_}
   tmpdir=shp/${slug}-imposm
 
   mkdir ${tmpdir}
