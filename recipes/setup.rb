@@ -23,6 +23,7 @@ ark 'imposm3' do
   version       node[:mapzen_odes][:imposm][:version]
   prefix_root   node[:mapzen_odes][:imposm][:installdir]
   has_binaries  ['imposm3']
+  not_if        { ::File.exist?("#{node[:mapzen_odes][:imposm][:installdir]}/imposm3-#{node[:mapzen_odes][:imposm][:version]}" }
 end
 
 # scripts basedir
