@@ -69,7 +69,7 @@ function imposm_shapefiles
 
   # shps
   for i in ${arr[@]}; do
-    pgsql2shp -rk -f shp/${tmpdir}/${slug}_osm_${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
+    pgsql2shp -rk -f ${tmpdir}/${slug}_osm_${i}.shp ${PGSQL2SHPOPTS} ${prefix}_${i}
   done
   zip -j shp/${slug}.imposm-shapefiles.zip ${tmpdir}/${slug}_osm_*.shp ${tmpdir}/${slug}_osm_*.prj ${tmpdir}/${slug}_osm_*.dbf ${tmpdir}/${slug}_osm_*.shx
 
