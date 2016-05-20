@@ -45,13 +45,13 @@ function osm2pgsql_shapefiles
 
   # clean up the db
   #
-  echo "DROP TABLE ${prefix}_line"    | psql ${PGSQLOPTS}
-  echo "DROP TABLE ${prefix}_nodes"   | psql ${PGSQLOPTS}
-  echo "DROP TABLE ${prefix}_point"   | psql ${PGSQLOPTS}
-  echo "DROP TABLE ${prefix}_polygon" | psql ${PGSQLOPTS}
-  echo "DROP TABLE ${prefix}_rels"    | psql ${PGSQLOPTS}
-  echo "DROP TABLE ${prefix}_roads"   | psql ${PGSQLOPTS}
-  echo "DROP TABLE ${prefix}_ways"    | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_line\""    | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_nodes\""   | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_point\""   | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_polygon\"" | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_rels\""    | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_roads\""   | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_ways\""    | psql ${PGSQLOPTS}
 }
 export -f osm2pgsql_shapefiles
 
@@ -85,7 +85,7 @@ function imposm_shapefiles
   rm -r ${tmpdir}
 
   for i in ${arr[@]}; do
-    echo "DROP TABLE ${prefix}_${i} CASCADE" | psql ${PGSQLOPTS}
+    echo "DROP TABLE \"${prefix}_${i}\" CASCADE" | psql ${PGSQLOPTS}
   done
 }
 export -f imposm_shapefiles
