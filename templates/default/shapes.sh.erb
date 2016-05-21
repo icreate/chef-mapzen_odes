@@ -58,8 +58,8 @@ export -f osm2pgsql_shapefiles
 function imposm_shapefiles
 {
   slug=$1
-  pre=imposm_${slug//-/_}
-  prefix=`echo ${pre:0:16}`
+  pre=imp_${slug//-/_}
+  prefix=`echo ${pre:0:24}`
   tmpdir=shp/${slug}-imposm
 
   mkdir ${tmpdir}
