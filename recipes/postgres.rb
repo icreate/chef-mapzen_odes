@@ -27,27 +27,31 @@ if node[:mapzen_odes][:postgres][:host] == 'localhost'
     owner   'postgres'
   end
 
-  pg_user node[:mapzen_odes][:postgres][:user] do
-    privileges         superuser: true, createdb: true, login: true
+  postgresql_user node[:mapzen_odes][:postgres][:user] do
+    createdb  true
+    login     true
+    superuser true
     encrypted_password node[:mapzen_odes][:postgres][:password]
   end
 
   # drop then create the db. Ensure we're fresh on every run
   #   should we need to start over in the middle for some reason.
-  pg_database node[:mapzen_odes][:postgres][:db] do
+  postgresql_database node[:mapzen_odes][:postgres][:db] do
     action :drop
   end
 
-  pg_database node[:mapzen_odes][:postgres][:db] do
+  postgresql_database node[:mapzen_odes][:postgres][:db] do
     owner     node[:mapzen_odes][:postgres][:user]
     encoding  'utf8'
     template  'template0'
   end
 
-  pg_database_extensions node[:mapzen_odes][:postgres][:db] do
-    extensions  ['hstore']
-    languages   'plpgsql'
-    postgis     true
+  postgresql_extension 'postgis' do
+    database node[:mapzen_odes][:postgres][:db]
+  end
+
+  postgresql_extension 'hstore' do
+    database node[:mapzen_odes][:postgres][:db]
   end
 
   # force a restart up front
