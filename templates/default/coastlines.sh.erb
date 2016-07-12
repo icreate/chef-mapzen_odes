@@ -3,10 +3,10 @@
 function package_coast
 {
   slug=$1
-  top=$2
-  left=$3
-  bottom=$4
-  right=$5
+  left=$2
+  bottom=$3
+  right=$4
+  top=$5
 
   ogr2ogr -spat ${left} ${bottom} ${right} ${top} -t_srs EPSG:4326 coast/${slug}_water_coast.shp data/water-polygons-split-4326/water_polygons.shp
 
