@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.11.0
+------
+* use `remote_file` resource to pull polygons in order to keep them updated over time
+
 0.10.2
 ------
 * aws-sdk install should be a chef-gem to support upload
