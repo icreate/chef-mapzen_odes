@@ -8,6 +8,7 @@ remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:
   mode        0644
   retries     2
   retry_delay 60
+  backup      false
   source      node[:mapzen_odes][:coastlines][:water_polygons][:url]
   notifies    :run, 'execute[unzip water polygons]', :immediately
 end
@@ -26,6 +27,7 @@ remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:
   mode        0644
   retries     2
   retry_delay 60
+  backup      false
   source      node[:mapzen_odes][:coastlines][:water_polygons][:url]
   notifies    :run, 'execute[unzip land polygons]', :immediately
 end
