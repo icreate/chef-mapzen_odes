@@ -94,9 +94,9 @@ declare -a osm2pgsql_cities=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
     <% if node[:mapzen_odes][city][:osm2pgsql_geojson] == true -%>
-      <%= city %> true
+      "<%= city %> true"
     <% else %>
-      <%= city %> false
+      "<%= city %> false"
     <% end -%>
   <% end -%>
 <% end -%>
@@ -106,9 +106,9 @@ declare -a imposm_cities=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
     <% if node[:mapzen_odes][city][:imposm_geojson] == true -%>
-      <%= city %> true
+      "<%= city %> true"
     <% else %>
-      <%= city %> false
+      "<%= city %> false"
     <% end -%>
   <% end -%>
 <% end -%>
