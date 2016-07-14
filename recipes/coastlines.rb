@@ -6,8 +6,8 @@
 remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:water_polygons][:file]}" do
   owner       node[:mapzen_odes][:user][:id]
   mode        0644
-  retries     2
-  retry_delay 60
+  retries     10
+  retry_delay 10
   backup      false
   source      node[:mapzen_odes][:coastlines][:water_polygons][:url]
   notifies    :run, 'execute[unzip water polygons]', :immediately
@@ -23,8 +23,8 @@ end
 remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:land_polygons][:file]}" do
   owner       node[:mapzen_odes][:user][:id]
   mode        0644
-  retries     2
-  retry_delay 60
+  retries     10
+  retry_delay 10
   backup      false
   source      node[:mapzen_odes][:coastlines][:land_polygons][:url]
   notifies    :run, 'execute[unzip land polygons]', :immediately
