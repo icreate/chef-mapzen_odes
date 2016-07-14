@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.0
+------
+* update coastline data weekly via cron rather than checking data via chef on every instantiation
+
 0.11.1
 ------
 * retry coastline downloads for up to 10 minutes
