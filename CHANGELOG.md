@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.1
+------
+* provide some randomization of cron initiation times
+
 0.12.0
 ------
 * update coastline data weekly via cron rather than checking data via chef on every instantiation
