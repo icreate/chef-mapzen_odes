@@ -6,6 +6,7 @@
 # only used for the initial setup run, after which we rely on the cron job
 #   to download new data weekly
 
+water_polygons_dir = "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:water_polygons][:file]}".split('.zip').first
 remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:water_polygons][:file]}" do
   owner       node[:mapzen_odes][:user][:id]
   mode        0644
@@ -14,7 +15,7 @@ remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:
   backup      false
   source      node[:mapzen_odes][:coastlines][:water_polygons][:url]
   notifies    :run, 'execute[unzip water polygons]', :immediately
-  not_if      { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:water_polygons][:file]}") }
+  not_if      { ::File.exist?(water_polygons_dir) }
 end
 
 execute 'unzip water polygons' do
@@ -24,6 +25,7 @@ execute 'unzip water polygons' do
   command "unzip -o #{node[:mapzen_odes][:coastlines][:water_polygons][:file]}"
 end 
 
+land_polygons_dir = "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:land_polygons][:file]}".split('.zip').first
 remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:land_polygons][:file]}" do
   owner       node[:mapzen_odes][:user][:id]
   mode        0644
@@ -32,7 +34,7 @@ remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:
   backup      false
   source      node[:mapzen_odes][:coastlines][:land_polygons][:url]
   notifies    :run, 'execute[unzip land polygons]', :immediately
-  not_if      { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:land_polygons][:file]}") }
+  not_if      { ::File.exist?(land_polygons_dir) }
 end
 
 execute 'unzip land polygons' do
