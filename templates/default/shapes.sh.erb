@@ -90,30 +90,30 @@ function imposm_shapefiles
 }
 export -f imposm_shapefiles
 
-declare -a osm2pgsql_cities=(
+declare -a osm2pgsql_cmd=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
     <% if node[:mapzen_odes][city][:osm2pgsql_geojson] == true -%>
-      "<%= city %> true"
+      "osm2pgsql_shapefiles <%= city %> true"
     <% else %>
-      "<%= city %> false"
+      "osm2pgsql_shapefiles <%= city %> false"
     <% end -%>
   <% end -%>
 <% end -%>
 )
 
-declare -a imposm_cities=(
+declare -a imposm_cmd=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
     <% if node[:mapzen_odes][city][:imposm_geojson] == true -%>
-      "<%= city %> true"
+      "imposm_shapefiles <%= city %> true"
     <% else %>
-      "<%= city %> false"
+      "imposm_shapefiles <%= city %> false"
     <% end -%>
   <% end -%>
 <% end -%>
 )
 
-parallel --jobs <%= node[:mapzen_odes][:shapes][:osm2pgsql_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_osm2pgsql_shapefiles.log osm2pgsql_shapefiles ::: "${osm2pgsql_cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_shapefiles.log 2>&1
+parallel --jobs <%= node[:mapzen_odes][:shapes][:osm2pgsql_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_osm2pgsql_shapefiles.log ::: "${osm2pgsql_cmd[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/osm2pgsql_shapefiles.log 2>&1
 
-parallel --jobs <%= node[:mapzen_odes][:shapes][:imposm_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_imposm_shapefiles.log imposm_shapefiles ::: "${imposm_cities[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/imposm_shapefiles.log 2>&1
+parallel --jobs <%= node[:mapzen_odes][:shapes][:imposm_jobs] %> --joblog <%= node[:mapzen_odes][:setup][:basedir] %>/logs/parallel_imposm_shapefiles.log ::: "${imposm_cmd[@]}" ><%= node[:mapzen_odes][:setup][:basedir] %>/logs/imposm_shapefiles.log 2>&1
