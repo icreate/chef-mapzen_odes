@@ -21,8 +21,8 @@ else
   touch ${lockfile}
 
   echo "Retrieving data."
-  wget ${water_url} -O ${water_file}
-  wget ${land_url} -O ${land_file}
+  wget --quiet ${water_url} -O ${water_file}
+  wget --quiet ${land_url} -O ${land_file}
 
   echo "Uncompressing data."
   unzip -o ${water_file}
