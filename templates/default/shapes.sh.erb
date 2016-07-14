@@ -87,7 +87,7 @@ export -f imposm_shapefiles
 declare -a osm2pgsql_cities=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
-    <%= city %> false
+    <%= city %>
   <% end -%>
 <% end -%>
 )
