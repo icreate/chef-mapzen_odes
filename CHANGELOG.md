@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.4
+------
+* make geojson optional again, cuz it's nice
+
 0.12.3
 ------
 * geojson processing is no longer optional
