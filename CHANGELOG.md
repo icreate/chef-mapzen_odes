@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.2
+------
+* fix bug in geojson processing
+
 0.12.1
 ------
 * provide some randomization of cron initiation times
