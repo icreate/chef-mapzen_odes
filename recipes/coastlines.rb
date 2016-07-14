@@ -44,6 +44,7 @@ execute 'unzip land polygons' do
   command "unzip -o #{node[:mapzen_odes][:coastlines][:land_polygons][:file]}"
 end 
 
+# actual processing happens here
 execute 'generate coastlines' do
   user    node[:mapzen_odes][:user][:id]
   cwd     node[:mapzen_odes][:setup][:basedir]
