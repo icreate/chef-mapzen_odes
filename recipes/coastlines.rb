@@ -15,7 +15,7 @@ remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:
   backup      false
   source      node[:mapzen_odes][:coastlines][:water_polygons][:url]
   notifies    :run, 'execute[unzip water polygons]', :immediately
-  not_if      { ::File.exist?(water_polygons_dir) }
+  not_if      { ::File.directory?(water_polygons_dir) }
 end
 
 execute 'unzip water polygons' do
@@ -34,7 +34,7 @@ remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:
   backup      false
   source      node[:mapzen_odes][:coastlines][:land_polygons][:url]
   notifies    :run, 'execute[unzip land polygons]', :immediately
-  not_if      { ::File.exist?(land_polygons_dir) }
+  not_if      { ::File.directory?(land_polygons_dir) }
 end
 
 execute 'unzip land polygons' do
