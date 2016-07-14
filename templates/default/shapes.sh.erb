@@ -13,7 +13,6 @@ export PGPASSWORD OSMOPTS PGSQLOPTS PGSQL2SHPOPTS SHAPE_ENCODING
 function osm2pgsql_shapefiles
 {
   slug=$1
-  geojson=$2 #true/false
   pre=${slug//-/_}
   prefix=`printf '%s\n' "${pre//[[:digit:]]/}" | tr '[:upper:]' '[:lower:]'`
 
@@ -27,13 +26,11 @@ function osm2pgsql_shapefiles
 
   # generate geojson from shp files
   #
-  if [ ${geojson} == 'true' ]; then
-    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_line.geojson shp/${slug}_osm_line.shp
-    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_point.geojson shp/${slug}_osm_point.shp
-    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_polygon.geojson shp/${slug}_osm_polygon.shp
+  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_line.geojson shp/${slug}_osm_line.shp
+  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_point.geojson shp/${slug}_osm_point.shp
+  ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -t_srs epsg:4326 shp/${slug}_osm_polygon.geojson shp/${slug}_osm_polygon.shp
 
-    zip -j shp/${slug}.osm2pgsql-geojson.zip shp/${slug}_osm_*.geojson
-  fi
+  zip -j shp/${slug}.osm2pgsql-geojson.zip shp/${slug}_osm_*.geojson
 
   # zip up our output
   #
@@ -58,7 +55,6 @@ export -f osm2pgsql_shapefiles
 function imposm_shapefiles
 {
   slug=$1
-  geojson=$2 #true/false
   pre=${slug//-/_}
   prefix=`printf '%s\n' "${pre//[[:digit:]]/}" | tr '[:upper:]' '[:lower:]'`
   tmpdir=shp/${slug}-imposm
@@ -75,12 +71,10 @@ function imposm_shapefiles
   done
   zip -j shp/${slug}.imposm-shapefiles.zip ${tmpdir}/${slug}_osm_*.shp ${tmpdir}/${slug}_osm_*.prj ${tmpdir}/${slug}_osm_*.dbf ${tmpdir}/${slug}_osm_*.shx
 
-  if [ ${geojson} == 'true' ]; then
-    for i in ${arr[@]}; do
-      ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 ${tmpdir}/${slug}_${i}.geojson ${tmpdir}/${slug}_osm_${i}.shp
-    done
-    zip -j shp/${slug}.imposm-geojson.zip ${tmpdir}/${slug}_*.geojson
-  fi
+  for i in ${arr[@]}; do
+    ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 ${tmpdir}/${slug}_${i}.geojson ${tmpdir}/${slug}_osm_${i}.shp
+  done
+  zip -j shp/${slug}.imposm-geojson.zip ${tmpdir}/${slug}_*.geojson
 
   rm -r ${tmpdir}
 
@@ -93,11 +87,7 @@ export -f imposm_shapefiles
 declare -a osm2pgsql_cities=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:osm2pgsql_shapes] == true -%>
-    <% if node[:mapzen_odes][city][:osm2pgsql_geojson] == true -%>
-      <%= city %> true
-    <% else %>
-      <%= city %> false
-    <% end %>
+    <%= city %> false
   <% end -%>
 <% end -%>
 )
@@ -105,11 +95,7 @@ declare -a osm2pgsql_cities=(
 declare -a imposm_cities=(
 <% data['cities'].keys.each do |city| -%>
   <% if node[:mapzen_odes][city][:imposm_shapes] == true -%>
-    <% if node[:mapzen_odes][city][:imposm_geojson] == true -%>
-      <%= city %> true
-    <% else %>
-      <%= city %> false
-    <% end -%>
+    <%= city %>
   <% end -%>
 <% end -%>
 )

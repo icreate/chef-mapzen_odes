@@ -3,7 +3,7 @@ mapzen_odes changelog
 
 0.12.3
 ------
-* also fix imposm geojson processing
+* geojson processing is no longer optional
 
 0.12.2
 ------
