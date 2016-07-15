@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.5
+------
+* no lockfile when updating planet or polygons
+
 0.12.4
 ------
 * make geojson optional again, cuz it's nice

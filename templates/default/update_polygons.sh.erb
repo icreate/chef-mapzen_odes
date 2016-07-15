@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-lockfile=/tmp/polygons_update.lock
-
 water_url=<%= node[:mapzen_odes][:coastlines][:water_polygons][:url] %>
 water_file=<%= node[:mapzen_odes][:coastlines][:water_polygons][:file] %>
 
@@ -10,26 +8,12 @@ land_file=<%= node[:mapzen_odes][:coastlines][:land_polygons][:file] %>
 
 echo "Starting polygon update run at $(date)."
 
-echo -e "Checking for lockfile... \c"
-if [ -f ${lockfile} ]; then
-  echo "found, exiting."
-  exit 1
-else
-  echo "not found, continuing."
+echo "Retrieving data."
+wget --quiet ${water_url} -O ${water_file}
+wget --quiet ${land_url} -O ${land_file}
 
-  echo "Creating lockfile."
-  touch ${lockfile}
+echo "Uncompressing data."
+unzip -o ${water_file}
+unzip -o ${land_file}
 
-  echo "Retrieving data."
-  wget --quiet ${water_url} -O ${water_file}
-  wget --quiet ${land_url} -O ${land_file}
-
-  echo "Uncompressing data."
-  unzip -o ${water_file}
-  unzip -o ${land_file}
-
-  echo "Removing lockfile."
-  rm ${lockfile}
-
-  echo "Finishing run at $(date)."
-fi
+echo "Finishing run at $(date)."
