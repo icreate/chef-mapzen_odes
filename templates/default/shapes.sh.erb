@@ -13,7 +13,7 @@ export PGPASSWORD OSMOPTS PGSQLOPTS PGSQL2SHPOPTS SHAPE_ENCODING
 function osm2pgsql_shapefiles
 {
   slug=$1
-  geojson=$2
+  geojson=$2 #true/false
   pre=${slug//-/_}
   prefix=`printf '%s\n' "${pre//[[:digit:]]/}" | tr '[:upper:]' '[:lower:]'`
 
