@@ -23,7 +23,7 @@ execute 'unzip water polygons' do
   user    node[:mapzen_odes][:user][:id]
   cwd     "#{node[:mapzen_odes][:setup][:basedir]}/data"
   command "unzip -o #{node[:mapzen_odes][:coastlines][:water_polygons][:file]}"
-end 
+end
 
 land_polygons_dir = "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:land_polygons][:file]}".split('.zip').first
 remote_file "#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:coastlines][:land_polygons][:file]}" do
@@ -42,7 +42,7 @@ execute 'unzip land polygons' do
   user    node[:mapzen_odes][:user][:id]
   cwd     "#{node[:mapzen_odes][:setup][:basedir]}/data"
   command "unzip -o #{node[:mapzen_odes][:coastlines][:land_polygons][:file]}"
-end 
+end
 
 # actual processing happens here
 execute 'generate coastlines' do

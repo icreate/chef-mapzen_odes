@@ -2,3 +2,5 @@ LineLength:
   Max: 250
 SpaceBeforeFirstArg:
   Enabled: false
+Style/NumericLiteralPrefix:
+  Enabled: false
