@@ -28,7 +28,7 @@ unless node[:mapzen_odes][:json].nil?
     end
 
     # if we're told to process these things, pbf extracts needs to be true.
-    # only coastlines ([:mapzen_odes][:city][:coastlines]) don't need a pbf_extract.
+    # only coastlines ([:mapzen_odes][city][:coastlines]) don't need a pbf extract.
     if node[:mapzen_odes][city][:xml_extracts] == true ||
        node[:mapzen_odes][city][:imposm_shapes] == true ||
        node[:mapzen_odes][city][:imposm_geojson] == true ||
