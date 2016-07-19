@@ -45,6 +45,7 @@ default[:postgresql][:max_connections]                            = '200'
 default[:mapzen_odes][:planet][:timeout]                          = 3600
 default[:mapzen_odes][:planet][:url]                              = 'planet.us-east-1.mapzen.com/planet-latest.osm.pbf'
 default[:mapzen_odes][:planet][:file]                             = node[:mapzen_odes][:planet][:url].split('/').last
+default[:mapzen_odes][:planet_update][:timeout]                   = 10_800 # 3 hours
 
 # extracts
 default[:mapzen_odes][:osmconvert][:timeout]                      = 172_800

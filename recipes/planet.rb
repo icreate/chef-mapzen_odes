@@ -19,6 +19,29 @@ execute 'download planet' do
   notifies  :run, 'execute[osmconvert planet]', :immediately
 end
 
+# update the planet if this is the initial setup run
+execute 'update planet' do
+  user        node[:mapzen_odes][:user][:id]
+  cwd         "#{node[:mapzen_odes][:setup][:basedir]}/data"
+  timeout     node[:mapzen_odes][:planet_update][:timeout]
+  retries     2
+  retry_delay 60
+  notifies    :create, "file[#{node[:mapzen_odes][:setup][:basedir]}/data/.planet_update_lock}]", :immediately
+  command <<-EOH
+    osmupdate #{node[:mapzen_odes][:planet][:file]} \
+      updated-#{node[:mapzen_odes][:planet][:file]} &&
+    rm #{node[:mapzen_odes][:planet][:file]} &&
+    mv updated-#{node[:mapzen_odes][:planet][:file]} #{node[:mapzen_odes][:planet][:file]}
+  EOH
+  not_if { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/.planet_update_lock") }
+end
+
+file "#{node[:mapzen_odes][:setup][:basedir]}/data/.planet_update_lock" do
+  action  :nothing
+  content 'lockfile'
+  user    node[:mapzen_odes][:user][:id]
+end
+
 execute 'osmconvert planet' do
   action :nothing
   user   node[:mapzen_odes][:user][:id]
