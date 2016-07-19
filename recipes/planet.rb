@@ -26,7 +26,7 @@ execute 'initial planet update' do
   timeout     node[:mapzen_odes][:planet_update][:timeout]
   retries     2
   retry_delay 60
-  notifies    :create, "file[#{node[:mapzen_odes][:setup][:basedir]}/data/.planet_update_lock]", :immediately
+  notifies    :create, "file[#{node[:mapzen_odes][:setup][:basedir]}/data/.planet_update_lock]", :delayed
   command <<-EOH
     osmupdate #{node[:mapzen_odes][:planet][:file]} \
       updated-#{node[:mapzen_odes][:planet][:file]} &&
