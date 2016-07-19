@@ -20,7 +20,7 @@ execute 'download planet' do
 end
 
 # update the planet if this is the initial setup run
-execute 'update planet' do
+execute 'initial planet update' do
   user        node[:mapzen_odes][:user][:id]
   cwd         "#{node[:mapzen_odes][:setup][:basedir]}/data"
   timeout     node[:mapzen_odes][:planet_update][:timeout]
