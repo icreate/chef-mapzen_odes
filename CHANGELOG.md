@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.6
+------
+* osmupdate planet file on setup
+
 0.12.5
 ------
 * no lockfile when updating planet or polygons

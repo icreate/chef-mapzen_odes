@@ -16,7 +16,25 @@ execute 'download planet' do
 
   not_if    { ::File.exist?("#{node[:mapzen_odes][:setup][:basedir]}/data/#{node[:mapzen_odes][:planet][:file]}") }
 
-  notifies  :run, 'execute[osmconvert planet]', :immediately
+  notifies :run, 'execute[initial planet update]', :immediately
+  notifies :run, 'execute[osmconvert planet]', :immediately
+end
+
+# update the planet if this is the initial setup run
+execute 'initial planet update' do
+  action      :nothing
+  user        node[:mapzen_odes][:user][:id]
+  cwd         "#{node[:mapzen_odes][:setup][:basedir]}/data"
+  timeout     node[:mapzen_odes][:planet_update][:timeout]
+  retries     2
+  retry_delay 60
+  command <<-EOH
+    osmupdate #{node[:mapzen_odes][:planet][:file]} \
+      updated-#{node[:mapzen_odes][:planet][:file]} \
+      >#{node[:mapzen_odes][:setup][:basedir]}/logs/osmupdate_planet.log 2>&1 &&
+    rm #{node[:mapzen_odes][:planet][:file]} &&
+    mv updated-#{node[:mapzen_odes][:planet][:file]} #{node[:mapzen_odes][:planet][:file]}
+  EOH
 end
 
 execute 'osmconvert planet' do
