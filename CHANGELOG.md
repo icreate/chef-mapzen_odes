@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.7
+------
+* use hash-memory flag when converting shapes
+
 0.12.6
 ------
 * osmupdate planet file on setup

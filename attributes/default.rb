@@ -49,6 +49,7 @@ default[:mapzen_odes][:planet_update][:timeout]                   = 10_800 # 3 h
 
 # extracts
 default[:mapzen_odes][:osmconvert][:timeout]                      = 172_800
+default[:mapzen_odes][:osmconvert][:hash_memory]                  = 1500 # megabytes
 default[:mapzen_odes][:osmconvert][:jobs]                         = node[:cpu][:total]
 
 # shapes: note that the number of jobs below reflects close to the limit of what the
