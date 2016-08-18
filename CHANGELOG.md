@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.12.8
+------
+* install osm2pgsql from package as we're on Ubuntu 16.04 now
+
 0.12.7
 ------
 * use hash-memory flag when converting shapes

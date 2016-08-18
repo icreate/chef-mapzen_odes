@@ -3,7 +3,7 @@
 # Recipe:: setup
 #
 
-include_recipe 'osm2pgsql::default'
+package 'osm2pgsql'
 
 %w(
   build-essential
