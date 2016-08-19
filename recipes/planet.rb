@@ -59,7 +59,7 @@ cron 'update planet' do
   command "sleep $(expr $RANDOM \% 300) && #{node[:mapzen_odes][:setup][:scriptsdir]}/update_planet.sh >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_planet.log 2>&1"
   user    node[:mapzen_odes][:user][:id]
   home    "#{node[:mapzen_odes][:setup][:basedir]}/data"
-  hour    '5'
+  hour    '14'
   minute  '*'
   weekday '*'
 end
