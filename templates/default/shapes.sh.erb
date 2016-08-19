@@ -45,7 +45,7 @@ function osm2pgsql_shapefiles
 
   # clean up the db
   #
-  psql ${PGSQLOPTS} -c "SELECT 'DROP TABLE ' || tablename || ';' FROM pg_tables WHERE tablename LIKE '${prefix}%' AND schemaname = 'public';" | grep "DROP TABLE" | psql ${PGSQLOPTS}
+  psql ${PGSQLOPTS} -c "SELECT 'DROP TABLE ' || tablename || ';' FROM pg_tables WHERE tablename LIKE '${prefix}%' AND schemaname = 'public' AND tableowner = '<%= node[:mapzen_odes][:postgres][:user] %>';" | grep "DROP TABLE" | psql ${PGSQLOPTS}
 }
 export -f osm2pgsql_shapefiles
 
@@ -79,7 +79,7 @@ function imposm_shapefiles
   rm -r ${tmpdir}
 
   # clean up the db
-  psql ${PGSQLOPTS} -c "SELECT 'DROP TABLE ' || tablename || ';' FROM pg_tables WHERE tablename LIKE '${prefix}%' AND schemaname = 'public';" | grep "DROP TABLE" | psql ${PGSQLOPTS}
+  psql ${PGSQLOPTS} -c "SELECT 'DROP TABLE ' || tablename || ';' FROM pg_tables WHERE tablename LIKE '${prefix}%' AND schemaname = 'public' AND tableowner = '<%= node[:mapzen_odes][:postgres][:user] %>';" | grep "DROP TABLE" | psql ${PGSQLOPTS}
 }
 export -f imposm_shapefiles
 

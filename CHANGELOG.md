@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.13.1
+------
+* make sure we only drop anything owned by the osm user in PG
+
 0.13.0
 ------
 * bump
