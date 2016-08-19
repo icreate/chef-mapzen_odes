@@ -45,10 +45,13 @@ function osm2pgsql_shapefiles
 
   # clean up the db
   #
-  tables="linenodes point polygon rels roads ways barrierpoints barrierways housenumbers housenumbers_interpolated waterways_gen0 waterways_gen1"
-  for table in ${tables}; do
-    echo "DROP TABLE \"${prefix}_${table}\"" | psql ${PGSQLOPTS}
-  done
+  echo "DROP TABLE \"${prefix}_line\""    | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_nodes\""   | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_point\""   | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_polygon\"" | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_rels\""    | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_roads\""   | psql ${PGSQLOPTS}
+  echo "DROP TABLE \"${prefix}_ways\""    | psql ${PGSQLOPTS}
 }
 export -f osm2pgsql_shapefiles
 
