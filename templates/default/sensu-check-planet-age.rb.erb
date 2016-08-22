@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'time'
+
+threshold   = 30 # age of planet in hours before we issue an alert
+time_now    = Time.new
+get_planet_time = 
+  `osmconvert <%= node[:mapzen_odes][:setup][:basedir] %>/data/<%= node[:mapzen_odes][:planet][:file] %> --out-timestamp`
+  if $?.exitstatus > 0
+    puts 'Failed to run osmconvert on planet to check timestamp!'
+    exit 1
+  end
+
+planet_time = Time.parse(get_planet_time)
+
+# get time diff in hours
+#
+time_diff = ((time_now - planet_time) / 3600).to_i
+
+# issue alerts if necessary, provide some grace
+#   time to actually run osmupdate, which happens
+#   once a day.
+#
+if time_diff > threshold
+  puts "The planet file was last updated more than #{threshold} hours ago: #{time_diff} hours!"
+  exit 2
+else
+  puts "The planet file was updated less than #{threshold} hours ago: #{time_diff} hours, all is well."
+  exit 0
+end

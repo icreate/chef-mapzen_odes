@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.13.3
+------
+* check planet age with sensu
+
 0.13.2
 ------
 * change cron planet/coastline hour
