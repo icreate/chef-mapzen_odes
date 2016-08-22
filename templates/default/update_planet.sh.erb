@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# stagger runs
+sleep $(expr $RANDOM % 300)
+
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
 
 echo "Starting run at $(date)."

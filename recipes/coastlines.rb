@@ -61,7 +61,7 @@ template "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_polygons.sh" do
 end
 
 cron 'update polygons' do
-  command "sleep $(expr $RANDOM \\% 300) && #{node[:mapzen_odes][:setup][:scriptsdir]}/update_polygons.sh >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_polygons.log 2>&1"
+  command "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_polygons.sh >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_polygons.log 2>&1"
   user    node[:mapzen_odes][:user][:id]
   home    "#{node[:mapzen_odes][:setup][:basedir]}/data"
   hour    '13'

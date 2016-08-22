@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# stagger runs
+sleep $(expr $RANDOM % 300)
+
 water_url=<%= node[:mapzen_odes][:coastlines][:water_polygons][:url] %>
 water_file=<%= node[:mapzen_odes][:coastlines][:water_polygons][:file] %>
 
