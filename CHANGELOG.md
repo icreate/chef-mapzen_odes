@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.13.4
+------
+* update the array of tables we drop for imposm shps
+
 0.13.3
 ------
 * check planet age with sensu

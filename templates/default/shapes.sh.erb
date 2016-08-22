@@ -61,7 +61,7 @@ function imposm_shapefiles
 
   imposm3 import -mapping <%= node[:mapzen_odes][:setup][:scriptsdir] %>/mapping.json -read ex/${slug}.osm.pbf -cachedir ${tmpdir} -srid 4326 -write -connection postgis://<%= node[:mapzen_odes][:postgres][:user] %>:<%= node[:mapzen_odes][:postgres][:password] %>@<%= node[:mapzen_odes][:postgres][:host] %>/<%= node[:mapzen_odes][:postgres][:db] %>?prefix=${prefix}_ -deployproduction
 
-  declare -a arr=('admin' 'aeroways' 'amenities' 'buildings' 'landusages' 'landusages_gen0' 'landusages_gen1' 'places' 'roads' 'roads_gen0' 'roads_gen1' 'transport_areas' 'transport_points' 'waterareas' 'waterareas_gen0' 'waterareas_gen1' 'waterways')
+  declare -a arr=('admin' 'aeroways' 'amenities' 'buildings' 'landusages' 'landusages_gen0' 'landusages_gen1' 'places' 'roads' 'roads_gen0' 'roads_gen1' 'transport_areas' 'transport_points' 'waterareas' 'waterareas_gen0' 'waterareas_gen1' 'waterways' 'barrierways' 'barrierpoints' 'housenumbers_interpolated' 'housenumbers')
 
   # shps
   for i in ${arr[@]}; do
