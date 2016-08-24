@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.13.7
+------
+* allow disabling of cron jobs for planet/polygon update
+
 0.13.6
 ------
 * allow bypassing of planet update on initial setup

@@ -57,6 +57,7 @@ template "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_planet.sh" do
 end
 
 cron 'update planet' do
+  action  node[:mapzen_odes][:planet_update][:cron] == true ? :create : :delete
   command "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_planet.sh >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_planet.log 2>&1"
   user    node[:mapzen_odes][:user][:id]
   home    "#{node[:mapzen_odes][:setup][:basedir]}/data"

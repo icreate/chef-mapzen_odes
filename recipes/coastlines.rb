@@ -61,6 +61,7 @@ template "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_polygons.sh" do
 end
 
 cron 'update polygons' do
+  action  node[:mapzen_odes][:polygons_update][:cron] == true ? :create : :delete
   command "#{node[:mapzen_odes][:setup][:scriptsdir]}/update_polygons.sh >#{node[:mapzen_odes][:setup][:basedir]}/logs/update_polygons.log 2>&1"
   user    node[:mapzen_odes][:user][:id]
   home    "#{node[:mapzen_odes][:setup][:basedir]}/data"

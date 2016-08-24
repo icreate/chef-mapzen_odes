@@ -46,6 +46,7 @@ default[:mapzen_odes][:planet][:timeout]                          = 3600
 default[:mapzen_odes][:planet][:url]                              = 'planet.us-east-1.mapzen.com/planet-latest.osm.pbf'
 default[:mapzen_odes][:planet][:file]                             = node[:mapzen_odes][:planet][:url].split('/').last
 default[:mapzen_odes][:planet_update][:run]                       = true
+default[:mapzen_odes][:planet_update][:cron]                      = true
 default[:mapzen_odes][:planet_update][:timeout]                   = 10_800 # 3 hours
 
 # extracts
@@ -61,6 +62,7 @@ default[:mapzen_odes][:shapes][:osm2pgsql_jobs]                   = 8
 default[:mapzen_odes][:shapes][:osm2pgsql_timeout]                = 172_800
 
 # coastlines
+default[:mapzen_odes][:polygons_update][:cron]                    = true
 default[:mapzen_odes][:coastlines][:jobs]                         = node[:cpu][:total]
 default[:mapzen_odes][:coastlines][:generate][:timeout]           = 7_200
 default[:mapzen_odes][:coastlines][:water_polygons][:url]         = 'http://data.openstreetmapdata.com/water-polygons-split-4326.zip'
