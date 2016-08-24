@@ -4,6 +4,7 @@
 sleep $(expr $RANDOM % 300)
 
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
+old_planet_size=$(du ${planet_file} | awk '{print $1}')
 
 echo "Starting run at $(date)."
 
@@ -12,6 +13,16 @@ osmupdate ${planet_file} updated-${planet_file}
 if [ $? != 0 ]; then
   echo "Failed running osmupdate! Aborting!"
   exit 3
+fi
+new_planet_size=$(du updated-${planet_file} | awk '{print $1}')
+
+# make sure planet looks sane
+if [ ${new_planet_size} -lt ${old_planet_size} ]; then
+  echo "New planet is smaller than existing planet! Aborting!"
+  echo "New planet size: ${new_planet_size}. Old planet size: ${old_planet_size}"
+  exit 4
+else
+  echo "New planet size: ${new_planet_size}. Old planet size: ${old_planet_size}"
 fi
 
 echo "Running osmconvert."
