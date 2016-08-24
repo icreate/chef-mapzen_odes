@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.13.6
+------
+* allow bypassing of planet update on initial setup
+
 0.13.5
 ------
 * try to catch any osmupdate failures on planet update

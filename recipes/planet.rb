@@ -35,6 +35,7 @@ execute 'initial planet update' do
     rm #{node[:mapzen_odes][:planet][:file]} &&
     mv updated-#{node[:mapzen_odes][:planet][:file]} #{node[:mapzen_odes][:planet][:file]}
   EOH
+  only_if { node[:mapzen_odes][:planet_update][:run] == true }
 end
 
 execute 'osmconvert planet' do
