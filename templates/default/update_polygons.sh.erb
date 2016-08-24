@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# bail on error
+set -e
+
 # stagger runs
 sleep $(expr $RANDOM % 300)
 
