@@ -19,10 +19,10 @@ new_planet_size=$(du -sh --block-size=1G updated-${planet_file} | awk '{print $1
 # make sure planet looks sane
 if [ ${new_planet_size} -lt ${old_planet_size} ]; then
   echo "New planet is smaller than existing planet! Aborting!"
-  echo "New planet size: ${new_planet_size}G. Old planet size: ${old_planet_size}G"
+  echo "New planet size: ${new_planet_size}G. Old planet size: ${old_planet_size}G."
   exit 4
 else
-  echo "New planet size: ${new_planet_size}G. Old planet size: ${old_planet_size}G"
+  echo "New planet size: ${new_planet_size}G. Old planet size: ${old_planet_size}G."
 fi
 
 echo "Running osmconvert."
