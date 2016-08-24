@@ -9,9 +9,17 @@ echo "Starting run at $(date)."
 
 echo "Running osmupdate."
 osmupdate ${planet_file} updated-${planet_file}
+if [ $? != 0 ]; then
+  echo "Failed running osmupdate! Aborting!"
+  exit 3
+fi
 
 echo "Running osmconvert."
 osmconvert updated-${planet_file} -o=planet_osmconvert.o5m
+if [ $? != 0 ]; then
+  echo "Failed running osmconvert! Aborting!"
+  exit 3
+fi
 
 echo "Moving updates into place."
 mv -f updated-${planet_file} ${planet_file}

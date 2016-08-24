@@ -1,6 +1,10 @@
 mapzen_odes changelog
 =====================
 
+0.13.5
+------
+* try to catch any osmupdate failures on planet update
+
 0.13.4
 ------
 * update the array of tables we drop for imposm shps
