@@ -4,7 +4,7 @@
 sleep $(expr $RANDOM % 300)
 
 planet_file=<%= node[:mapzen_odes][:planet][:file] %>
-old_planet_size=$(du ${planet_file} | awk '{print $1}')
+old_planet_size=$(du -sh --block-size=1G ${planet_file} | awk '{print $1}')
 
 echo "Starting run at $(date)."
 
@@ -14,7 +14,7 @@ if [ $? != 0 ]; then
   echo "Failed running osmupdate! Aborting!"
   exit 3
 fi
-new_planet_size=$(du updated-${planet_file} | awk '{print $1}')
+new_planet_size=$(du -sh --block-size=1G updated-${planet_file} | awk '{print $1}')
 
 # make sure planet looks sane
 if [ ${new_planet_size} -lt ${old_planet_size} ]; then
