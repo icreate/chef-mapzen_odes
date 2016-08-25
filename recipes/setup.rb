@@ -16,6 +16,12 @@ package 'osm2pgsql'
   package p
 end
 
+# lockrun
+remote_file '/usr/local/bin/lockrun' do
+  source 'https://s3.amazonaws.com/mapzen.software/lockrun'
+  mode '0755'
+end
+
 # imposm
 ark 'imposm3' do
   owner         'root'
