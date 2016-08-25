@@ -71,7 +71,7 @@ function imposm_shapefiles
 
   if [ ${geojson} == 'true' ]; then
     for i in ${arr[@]}; do
-      ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4236 ${tmpdir}/${slug}_${i}.geojson ${tmpdir}/${slug}_osm_${i}.shp
+      ogr2ogr -lco ENCODING="UTF-8" -f GeoJSON -s_srs epsg:4326 -t_srs epsg:4326 ${tmpdir}/${slug}_${i}.geojson ${tmpdir}/${slug}_osm_${i}.shp
     done
     zip -j shp/${slug}.imposm-geojson.zip ${tmpdir}/${slug}_*.geojson
   fi
