@@ -10,7 +10,6 @@
   mapzen_odes::user
   mapzen_odes::setup
   mapzen_odes::planet
-  mapzen_odes::sensu
   mapzen_odes::extracts
   mapzen_odes::shapes
   mapzen_odes::coastlines
