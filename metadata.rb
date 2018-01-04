@@ -16,7 +16,6 @@ recipe 'mapzen_odes', 'Builds metro extracts ode service'
   postgresql
   python
   user
-  mapzen_sensu_clients
 ).each do |dep|
   depends dep
 end
